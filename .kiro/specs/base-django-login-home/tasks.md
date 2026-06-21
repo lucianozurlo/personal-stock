@@ -17,7 +17,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `manage.py`, `config/__init__.py`, `config/settings.py`, `config/urls.py`, `config/wsgi.py`, `config/asgi.py`
     - _Requirements: 1.1_
 
-  - [ ] 1.2 Crear app Django `core`
+  - [x] 1.2 Crear app Django `core`
     - Ejecutar: `python manage.py startapp core` dentro de `./app/`
     - Verificar que existe `./app/core/` con `__init__.py`, `views.py`, `urls.py`, `models.py`, `tests.py`
     - Agregar `'core'` a `INSTALLED_APPS` en `config/settings.py`
