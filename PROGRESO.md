@@ -2,6 +2,16 @@
 
 Spec actual: base-django-login-home
 Tarea actual: —
+Último gate pasado: Paso 2 — spec maestro persistido
+Notas para retomar tras corte/429:
+- Paso 1 ✓: inventario, cierre (4 decisiones), PROGRESO actualizado
+- Paso 2 ✓: spec maestro en .kiro/specs/personal-stock-mvp-master/
+- Estado de specs: todos en "sin empezar"
+- Dependencias: confirmadas según inventario (spec 7 = Quick Plan)
+- Next: Paso 3.1 (requirements de base-django-login-home con Kiro)# PROGRESO
+
+Spec actual: base-django-login-home
+Tarea actual: —
 Último gate pasado: Cierre del Paso 1 (4 decisiones aplicadas)
 Notas para retomar tras corte/429: 
 - Decisión spec 7: ACCESO AMPLIO (Quick Plan, no depende de usuarios/permisos)
