@@ -11,7 +11,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
 ## Tasks
 
 - [ ] 1. Crear estructura base del proyecto Django
-  - [ ] 1.1 Crear carpeta `./app/` y scaffoldear proyecto con django-admin
+  - [x] 1.1 Crear carpeta `./app/` y scaffoldear proyecto con django-admin
     - Ejecutar: `mkdir app && cd app && django-admin startproject config .`
     - Verificar que existe `./app/manage.py` y `./app/config/settings.py`
     - Archivos esperados: `manage.py`, `config/__init__.py`, `config/settings.py`, `config/urls.py`, `config/wsgi.py`, `config/asgi.py`
