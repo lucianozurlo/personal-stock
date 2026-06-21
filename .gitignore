@@ -1,3 +1,14 @@
 .env
 .venv/
 cs-chat-rag/
+.DS_Store
+mails/
+comustock-base/
+assets-personal-stock/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.mp4
+*.zip
