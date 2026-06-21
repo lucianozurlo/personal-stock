@@ -1,4 +1,7 @@
-# PROGRESO
+Spec actual: base-django-login-home
+Tarea actual: 1.1
+Último gate pasado: 3.3 — requirements + design + tasks aprobados
+Next: Paso 3.4 — implementar tarea 1.1 con Claude Code (sesión nueva)# PROGRESO
 
 Spec actual: base-django-login-home
 Tarea actual: —
