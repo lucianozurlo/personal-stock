@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Stock :: Login</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body>
+    <main class="login-page">
+      <header class="login-topbar">
+        <a class="brand-link" href="login.html" aria-label="Personal Stock">
+          <img class="brand-logo brand-logo-dark" src="img/personal-stock-logo.svg" alt="Personal Stock" />
+          <img class="brand-logo brand-logo-light" src="img/personal-stock-logo-light.svg" alt="Personal Stock" />
+        </a>
+
+        <div class="top-actions">
+          <a class="support-link" href="mailto:comunicacioninterna@personal.com.ar">Soporte</a>
+          <button class="theme-switch" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="Cambiar tema claro u oscuro">
+            <span class="theme-switch-track">
+              <i class="fa-solid fa-moon ts-moon"></i>
+              <i class="fa-solid fa-sun ts-sun"></i>
+              <span class="theme-switch-thumb"></span>
+            </span>
+          </button>
+        </div>
+      </header>
+
+      <section class="login-shell" aria-label="Inicio de sesión">
+        <section class="login-card">
+          <div class="form-head">
+            <h1>Ingresá a Personal Stock</h1>
+            <p>Usá tus credenciales corporativas para continuar.</p>
+          </div>
+
+          <form class="login-form" id="loginForm" novalidate>
+            <div class="field-group">
+              <label for="email">Email</label>
+              <div class="field">
+                <i class="fa-regular fa-envelope"></i>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="nombre@personal.com.ar" required />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="password">Contraseña</label>
+              <div class="field">
+                <i class="fa-solid fa-lock"></i>
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Ingresá tu contraseña" required />
+                <button class="password-toggle" id="passwordToggle" type="button" aria-label="Mostrar contraseña"><i class="fa-regular fa-eye"></i></button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="check"><input type="checkbox" name="remember" /> Recordarme</label>
+              <a class="text-link" href="#">Olvidé mi contraseña</a>
+            </div>
+
+            <button class="login-btn" type="submit">Ingresar <i class="fa-solid fa-arrow-right"></i></button>
+          </form>
+
+          <div class="sso-divider">o continuar con</div>
+          <button class="sso-btn" id="ssoBtn" type="button"><i class="fa-brands fa-microsoft"></i> Microsoft 365</button>
+
+          <p class="form-note">Si no tenés acceso, contactate con <a href="mailto:comunicacioninterna@personal.com.ar">Comunicación Interna</a>.</p>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Login simulado: redirigiendo al home.</div>
+
+    <script src="js/login.js"></script>
+  </body>
+</html>
