@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Stock :: Agentes</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+  <body>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+    <div class="workspace-shell">
+      <aside class="sidebar" id="sidebar">
+        <header class="sidebar-header">
+          <div class="ws">
+            <div class="ws-brand">
+              <img class="brand-logo brand-logo-dark" id="brandLogo" src="img/personal-stock-logo.svg" alt="Personal Stock">
+              <img class="brand-logo brand-logo-light" src="img/personal-stock-logo-light.svg" alt="Personal Stock">
+              <span class="brand-wordmark">Personal Stock</span>
+            </div>
+          </div>
+          <button class="new-prompt" id="sideNewChat" type="button"><i class="fa-solid fa-plus"></i> Nueva consulta</button>
+        </header>
+
+        <nav class="sidebar-body" aria-label="Navegación principal">
+          <section class="nav-section">
+            <h2 class="nav-label">Espacio</h2>
+
+            <div class="nav-group">
+              <div class="nav-item active" data-sub="s-dash"><span class="ico"><i class="fa-solid fa-house"></i></span><span class="label">Inicio</span><span class="chev"><i class="fa-solid fa-chevron-right"></i></span></div>
+              <div class="submenu" id="s-dash"><a href="#">Resumen</a><a href="#">Actividad reciente</a><a href="#">Métricas</a></div>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-item" data-sub="s-proj"><span class="ico"><i class="fa-solid fa-layer-group"></i></span><span class="label">Proyectos</span><span class="chev"><i class="fa-solid fa-chevron-right"></i></span></div>
+              <div class="submenu" id="s-proj"><a href="#">Activos</a><a href="#">Archivados</a><a href="#">Nuevo proyecto</a></div>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-item" data-sub="s-hist"><span class="ico"><i class="fa-solid fa-clock-rotate-left"></i></span><span class="label">Historial</span><span class="chev"><i class="fa-solid fa-chevron-right"></i></span></div>
+              <div class="submenu" id="s-hist"><a href="#">Hoy</a><a href="#">Esta semana</a><a href="#">Todo el historial</a></div>
+            </div>
+
+            <div class="nav-group">
+              <div class="nav-item" data-sub="s-tpl"><span class="ico"><i class="fa-solid fa-bolt"></i></span><span class="label">Plantillas</span><span class="chev"><i class="fa-solid fa-chevron-right"></i></span></div>
+              <div class="submenu" id="s-tpl"><a href="#">Comunicados</a><a href="#">Reportes</a><a href="#">Mails</a></div>
+            </div>
+          </section>
+
+          <div class="divider"></div>
+
+          <section class="nav-section">
+            <h2 class="nav-label">Colecciones</h2>
+            <div class="collection"><span class="dot" style="background:#ff5d73"></span>Marketing</div>
+            <div class="collection"><span class="dot" style="background:#c44ce0"></span>Ventas</div>
+            <div class="collection"><span class="dot" style="background:#f0a23b"></span>Ingeniería</div>
+            <div class="collection"><span class="dot" style="background:#33c98a"></span>Producto</div>
+            <div class="collection"><span class="dot" style="background:#19c3e6"></span>General</div>
+            <button class="add-coll" type="button"><i class="fa-solid fa-plus"></i> Agregar colección</button>
+          </section>
+        </nav>
+
+        <footer class="sidebar-foot">
+          <div class="foot-row"><i class="fa-solid fa-gear"></i><span class="spacer">Configuración</span><i class="fa-solid fa-ellipsis-vertical" style="font-size:12px"></i></div>
+        </footer>
+      </aside>
+
+      <div class="main-shell">
+        <main class="app app-main" id="app">
+          <header class="topbar">
+            <a class="topbar-mobile-brand" href="#" aria-label="Personal Stock">
+              <img class="topbar-logo topbar-logo-dark" src="img/personal-stock-logo.svg" alt="Personal Stock">
+              <img class="topbar-logo topbar-logo-light" src="img/personal-stock-logo-light.svg" alt="Personal Stock">
+            </a>
+            <button class="new-chat-btn" id="newChatBtn" type="button"><i class="fa-solid fa-plus"></i> Nueva consulta</button>
+            <button class="theme-switch" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="Cambiar tema claro u oscuro">
+              <span class="theme-switch-track">
+                <i class="fa-solid fa-moon ts-moon"></i>
+                <i class="fa-solid fa-sun ts-sun"></i>
+                <span class="theme-switch-thumb"></span>
+              </span>
+            </button>
+            <button class="top-icon-btn" type="button" aria-label="Notificaciones"><i class="fa-regular fa-bell"></i></button>
+            <div class="user" id="user">
+              <button class="user-btn" id="userBtn" type="button" aria-expanded="false">
+                <span class="avatar">ML</span>
+                <span class="user-name">María López</span>
+                <span class="user-chev"><i class="fa-solid fa-chevron-down"></i></span>
+              </button>
+              <div class="dropdown" id="dropdown">
+                <div class="dd-head"><span class="avatar">ML</span>
+                  <div>
+                    <div class="nm">María López</div><small>maria.lopez@personal.com.ar</small>
+                  </div>
+                </div>
+                <div class="dd-item"><span class="ico"><i class="fa-solid fa-user"></i></span>Perfil</div>
+                <div class="dd-item"><span class="ico"><i class="fa-solid fa-sliders"></i></span>Preferencias</div>
+                <div class="dd-item"><span class="ico"><i class="fa-solid fa-circle-question"></i></span>Ayuda</div>
+                <div class="dd-item danger"><span class="ico"><i class="fa-solid fa-right-from-bracket"></i></span>Cerrar sesión</div>
+              </div>
+            </div>
+          </header>
+
+          <section class="viewport" id="viewport">
+            <section class="intro" id="intro">
+              <div class="welcome greet">
+                <h1><span id="welcomeTitle">Hola, Benja.</span><span class="sub">¿Qué necesitás resolver hoy?</span></h1>
+              </div>
+
+              <section class="suggestions-shell" aria-label="Accesos rápidos">
+                <div class="sugg-bar">
+                  <div class="carousel-nav">
+                    <button class="arrow" id="prev" type="button" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="arrow" id="next" type="button" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                </div>
+
+                <div class="carousel-wrap">
+                  <div class="carousel" id="carousel">
+                    <button class="card" type="button" data-prompt="Resumí la reunión all-hands de ayer">
+                      <h3>Resumí la reunión <span class="muted">all-hands de ayer</span></h3>
+                      <div class="card-media"><img src="https://picsum.photos/seed/allhands1/240/300" alt="" loading="lazy" data-fallback="person"></div>
+                      <div class="meta">Acme All-hands <span class="sep"></span> Antes del mediodía</div>
+                    </button>
+                    <button class="card" type="button" data-prompt="¿Qué puntos hay que abordar en esta propuesta?">
+                      <h3><span class="muted">Preguntá</span> “¿Qué hay que abordar en esta propuesta?”</h3>
+                      <div class="card-media"><img src="https://picsum.photos/seed/proposal9/240/300" alt="" loading="lazy" data-fallback="doc"></div>
+                      <div class="meta"><i class="fa-solid fa-paperclip"></i> 3 archivos <span class="sep"></span> Esta mañana</div>
+                    </button>
+                    <button class="card" type="button" data-prompt="Recapitulá el all-hands de ayer">
+                      <h3>Recapitulá el <span class="muted">all-hands de ayer</span></h3>
+                      <div class="card-media"><img src="https://picsum.photos/seed/allhands2/240/300" alt="" loading="lazy" data-fallback="person"></div>
+                      <div class="meta">AcmeCo all-hands <span class="sep"></span> Esta mañana</div>
+                    </button>
+                    <button class="card feature" type="button" data-prompt="Actualizá la etapa de Salesforce a Firmado">
+                      <span class="card-tag">Salesforce</span>
+                      <h3>Actualizar etapa a Firmado</h3>
+                      <div class="feature-spacer"></div>
+                      <div class="feature-label">Project ARR</div>
+                      <div class="big">$40.000</div>
+                    </button>
+                    <button class="card" type="button" data-prompt="Redactá un comunicado interno de RRHH">
+                      <h3>Redactar comunicado <span class="muted">interno de RRHH</span></h3>
+                      <div class="card-media"><img src="https://picsum.photos/seed/rrhh4/240/300" alt="" loading="lazy" data-fallback="doc"></div>
+                      <div class="meta"><i class="fa-solid fa-bolt"></i> Plantilla <span class="sep"></span> Hace 1 hora</div>
+                    </button>
+                    <button class="card" type="button" data-prompt="Generá un reporte de métricas de la semana">
+                      <h3>Generar reporte de <span class="muted">métricas semanal</span></h3>
+                      <div class="card-media"><img src="https://picsum.photos/seed/report7/240/300" alt="" loading="lazy" data-fallback="chart"></div>
+                      <div class="meta"><i class="fa-regular fa-calendar"></i> Semana actual</div>
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <div class="slot intro-slot" id="introSlot"></div>
+
+              <div class="starter-tools" id="starterTools">
+                <div class="starter-buttons" id="starterButtons">
+                  <button class="starter-chip" type="button" data-group="analizar">Analizar</button>
+                  <button class="starter-chip" type="button" data-group="escribir">Escribir</button>
+                  <button class="starter-chip" type="button" data-group="planificar">Planificar</button>
+                </div>
+
+                <div class="starter-dropdown" id="starterDropdown" hidden>
+                  <button class="starter-dropdown-close" id="starterDropdownClose" type="button" aria-label="Cerrar">×</button>
+                  <div class="starter-list" id="starterList"></div>
+                </div>
+              </div>
+
+              <div class="composer-hint">Personal Stock puede cometer errores. Verificá la información importante.</div>
+            </section>
+
+            <section class="conversation" id="conversation">
+              <div class="messages" id="messages"></div>
+            </section>
+
+            <section class="dock" id="dock">
+              <div class="dock-slot" id="dockSlot"></div>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+
+<template id="composerTemplate">
+      <div class="composer-shell" id="composerShell">
+        <div class="prompt-wrap">
+          <form class="prompt-box input-shell" id="composerForm">
+            <div class="attach-wrap">
+              <button class="icon-btn attach" id="attachBtn" type="button" aria-label="Agregar contenido"><i class="fa-solid fa-plus"></i></button>
+              <div class="attach-menu" id="attachMenu" hidden>
+                <button class="attach-item" type="button" data-attach="archivo"><i class="fa-solid fa-paperclip"></i> Agregá una imagen o documento</button>
+              </div>
+            </div>
+            <textarea id="composerInput" rows="1" placeholder="¿Cómo puedo ayudarte?"></textarea>
+            <button class="clear-icon" id="clearBtn" type="button" aria-label="Limpiar"><i class="fa-solid fa-xmark"></i></button>
+            <button class="send-btn send" id="sendBtn" type="submit" aria-label="Enviar"><i class="fa-solid fa-arrow-up"></i><span class="send-label">Enviar</span></button>
+          </form>
+        </div>
+      </div>
+    </template>
+
+    <!-- js/config.js -->
+<!-- js/state.js -->
+<!-- js/ui.js -->
+<!-- js/composer.js -->
+<!-- js/api.js -->
+<!-- js/main.js -->
+
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
