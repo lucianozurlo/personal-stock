@@ -10,7 +10,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
 
 ## Tasks
 
-- [ ] 1. Crear estructura base del proyecto Django
+- [x] 1. Crear estructura base del proyecto Django
   - [x] 1.1 Crear carpeta `./app/` y scaffoldear proyecto con django-admin
     - Ejecutar: `mkdir app && cd app && django-admin startproject config .`
     - Verificar que existe `./app/manage.py` y `./app/config/settings.py`
@@ -23,8 +23,8 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Agregar `'core'` a `INSTALLED_APPS` en `config/settings.py`
     - _Requirements: 1.5_
 
-- [ ] 2. Instalar dependencias y configurar entorno
-  - [ ] 2.1 Crear requirements.txt con versiones confirmadas
+- [x] 2. Instalar dependencias y configurar entorno
+  - [x] 2.1 Crear requirements.txt con versiones confirmadas
     - Crear archivo `./app/requirements.txt` con contenido:
       ```
       Django==5.2.15
@@ -36,13 +36,13 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/requirements.txt`
     - _Requirements: 1.2_
 
-  - [ ] 2.2 Instalar dependencias en el entorno
+  - [x] 2.2 Instalar dependencias en el entorno
     - Ejecutar: `pip install -r requirements.txt` desde `./app/`
     - Verificar que `pip list | grep -E "Django|dj-database-url"` muestra las versiones correctas
     - _Requirements: 1.2_
 
-- [ ] 3. Configurar settings.py (base de datos, templates, static files)
-  - [ ] 3.1 Configurar variables de entorno obligatorias
+- [x] 3. Configurar settings.py (base de datos, templates, static files)
+  - [x] 3.1 Configurar variables de entorno obligatorias
     - Agregar al inicio de `settings.py`:
       ```python
       import os
@@ -58,7 +58,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/config/settings.py`
     - _Requirements: 1.4, 10.2, 10.5_
 
-  - [ ] 3.2 Configurar DATABASE_URL con dj-database-url
+  - [x] 3.2 Configurar DATABASE_URL con dj-database-url
     - Reemplazar el bloque `DATABASES` en `settings.py` por:
 
       ```python
@@ -75,7 +75,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/config/settings.py`
     - _Requirements: 1.3, 10.1, 10.4_
 
-  - [ ] 3.3 Configurar TEMPLATES para consumir desde ./templates
+  - [x] 3.3 Configurar TEMPLATES para consumir desde ./templates
     - Modificar `TEMPLATES[0]['DIRS']` en `settings.py`:
       ```python
       'DIRS': [BASE_DIR.parent / 'templates'],
@@ -84,7 +84,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/config/settings.py`
     - _Requirements: 2.1, 2.2_
 
-  - [ ] 3.4 Configurar STATICFILES_DIRS para assets en ./templates
+  - [x] 3.4 Configurar STATICFILES_DIRS para assets en ./templates
     - Agregar después del bloque `STATIC_URL` en `settings.py`:
       ```python
       STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -98,7 +98,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/config/settings.py`
     - _Requirements: 3.1_
 
-  - [ ] 3.5 Configurar sesiones persistentes
+  - [x] 3.5 Configurar sesiones persistentes
     - Agregar al final de `settings.py`:
       ```python
       SESSION_ENGINE = 'django.contrib.sessions.backends.db'
@@ -112,7 +112,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/config/settings.py`
     - _Requirements: 9.1, 9.3, 9.4_
 
-  - [ ] 3.6 Configurar ALLOWED_HOSTS y DEBUG
+  - [x] 3.6 Configurar ALLOWED_HOSTS y DEBUG
     - Modificar en `settings.py`:
       ```python
       DEBUG = True  # Cambiar a False en producción
@@ -122,8 +122,8 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/config/settings.py`
     - _Requirements: 1.5_
 
-- [ ] 4. Configurar URLs del proyecto
-  - [ ] 4.1 Crear core/urls.py con rutas de autenticación
+- [x] 4. Configurar URLs del proyecto
+  - [x] 4.1 Crear core/urls.py con rutas de autenticación
     - Crear archivo `./app/core/urls.py` con contenido:
 
       ```python
@@ -143,7 +143,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/core/urls.py`
     - _Requirements: 5.2, 6.3_
 
-  - [ ] 4.2 Incluir core.urls en config/urls.py
+  - [x] 4.2 Incluir core.urls en config/urls.py
     - Modificar `config/urls.py` para incluir:
 
       ```python
@@ -160,8 +160,8 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/config/urls.py`
     - _Requirements: 5.2, 6.3_
 
-- [ ] 5. Implementar vistas de autenticación
-  - [ ] 5.1 Implementar login_view en core/views.py
+- [x] 5. Implementar vistas de autenticación
+  - [x] 5.1 Implementar login_view en core/views.py
     - Crear función `login_view(request)` en `./app/core/views.py`
     - Comportamiento GET: renderizar `login.html` sin contexto, o redirigir a `/` si ya autenticado
     - Comportamiento POST: recibir `email` y `password`, autenticar con `authenticate(request, username=email, password=password)`
@@ -172,7 +172,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/core/views.py`
     - _Requirements: 4.3, 4.4, 5.1, 5.4, 5.5, 5.6, 9.3, 9.4_
 
-  - [ ] 5.2 Implementar home_view en core/views.py
+  - [x] 5.2 Implementar home_view en core/views.py
     - Crear función `home_view(request)` en `./app/core/views.py` con decorador `@login_required`
     - Renderizar `home.html` con contexto:
       ```python
@@ -191,7 +191,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/core/views.py`, `./app/config/settings.py`
     - _Requirements: 4.2, 4.5, 6.1, 6.2, 6.4, 6.5, 7.1_
 
-  - [ ] 5.3 Implementar logout_view en core/views.py
+  - [x] 5.3 Implementar logout_view en core/views.py
     - Crear función `logout_view(request)` en `./app/core/views.py`
     - Llamar a `logout(request)` para destruir sesión
     - Redirigir a `/login/`
@@ -199,7 +199,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/core/views.py`
     - _Requirements: 4.6_
 
-- [ ] 6. Checkpoint - Verificar estructura base funciona
+- [x] 6. Checkpoint - Verificar estructura base funciona
   - Definir `DATABASE_URL=sqlite:///db.sqlite3` y `DJANGO_SECRET_KEY=<generada>` en el entorno
   - Ejecutar `python manage.py check` y verificar que no hay errores
   - Ejecutar `python manage.py migrate` y verificar que `./app/db.sqlite3` se crea

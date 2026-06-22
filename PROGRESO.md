@@ -44,3 +44,18 @@ Spec actual: base-django-login-home
 Tarea actual: 1.2
 Último gate pasado: tarea 1.1 completed — validación Kiro OK
 Next: Paso 3.4 — implementar tarea 1.2 con Claude Code (sesión nueva)
+
+Spec actual: base-django-login-home
+Tarea actual: 1.2
+Último gate pasado: tarea 1.2 completed — validación Kiro OK
+Next: Paso 3.4 — implementar tarea 2.1 con Claude Code (sesión nueva)
+
+Spec actual: base-django-login-home
+Tarea actual: 2.1
+Último gate pasado: tarea 1.2 completed — validación Kiro OK
+Next: Paso 3.4 — implementar tarea 2.2 con Claude Code (sesión nueva)
+
+Spec actual: base-django-login-home
+Tarea actual: 2.1
+Último gate pasado: tarea 1.2 completed — validación Kiro OK
+Next: Paso 3.4 — implementar tarea 3.1 con Claude Code (sesión nueva)
