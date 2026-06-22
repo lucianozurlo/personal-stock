@@ -22,14 +22,14 @@ Este plan implementa el sistema completo de usuarios demo, perfiles, roles y fil
 ## Tasks
 
 - [ ] 1. Respaldar superusuario existente y preparar migración a Custom User Model
-  - [ ] 1.1 Crear script de backup del superusuario actual
+  - [x] 1.1 Crear script de backup del superusuario actual
     - Crear script que extraiga email, password hash, is_staff, is_superuser del superusuario actual
     - Guardar backup en `app/fixtures/superuser_backup.json`
     - Documentar en código que este backup se usará después de la migración
     - _Requirements: 1.6, 8.2 (email unique), contexto crítico del spec_
 
 - [ ] 2. Crear Custom User Model y Role Model
-  - [ ] 2.1 Implementar User model extendiendo AbstractUser en `app/core/models.py`
+  - [x] 2.1 Implementar User model extendiendo AbstractUser en `app/core/models.py`
     - Agregar campo `email` como EmailField unique (USERNAME_FIELD)
     - Agregar campo `perfil` con choices (5 perfiles)
     - Agregar campo `roles` como ManyToManyField a Role
@@ -39,35 +39,35 @@ Este plan implementa el sistema completo de usuarios demo, perfiles, roles y fil
     - Agregar índices en perfil y es_focus
     - _Requirements: 3.1, 3.2, 3.3, 8.1, 8.2, 8.5_
 
-  - [ ] 2.2 Write property test for User model
+  - [x] 2.2 Write property test for User model
     - **Property 1: Email Uniqueness** - Para cualquier conjunto de usuarios creados, todos los emails deben ser únicos
     - **Property 2: Profile Assignment Persistence** - Para cualquier usuario con perfil válido, al guardarlo y recargarlo, el perfil persiste sin cambios
     - **Validates: Requirements 1.6, 3.2, 3.3, 8.2**
 
-  - [ ] 2.3 Implementar Role model en `app/core/models.py`
+  - [x] 2.3 Implementar Role model en `app/core/models.py`
     - Agregar campo `name` con choices (7 roles) unique
     - Agregar campo `description` opcional
     - Configurar Meta: verbose_name, ordering
     - _Requirements: 4.1_
 
-  - [ ] 2.4 Write property test for Role assignment
+  - [x] 2.4 Write property test for Role assignment
     - **Property 3: Role Assignment for Usuario IC** - Para cualquier usuario con perfil "Usuario IC", debe permitir asignar cero o más roles válidos que persisten correctamente
     - **Property 4: Role Restriction for Non-Usuario IC** - Para cualquier usuario con perfil diferente de "Usuario IC", no debe tener roles asignados (roles.count() == 0)
     - **Validates: Requirements 4.1, 4.2, 4.3, 4.4**
 
 - [ ] 3. Configurar AUTH_USER_MODEL y aplicar migración
-  - [ ] 3.1 Actualizar `app/config/settings.py`
+  - [x] 3.1 Actualizar `app/config/settings.py`
     - Agregar `AUTH_USER_MODEL = 'core.User'`
     - Verificar que esta configuración está antes de cualquier referencia a User
     - _Requirements: 3.3, 3.4_
 
-  - [ ] 3.2 Generar y aplicar migración inicial
+  - [x] 3.2 Generar y aplicar migración inicial
     - Ejecutar `python manage.py makemigrations`
     - Revisar migración generada (debe crear tabla core_user y core_role)
     - Aplicar migración con `python manage.py migrate`
     - _Requirements: 3.3_
 
-  - [ ] 3.3 Recrear superusuario desde backup
+  - [x] 3.3 Recrear superusuario desde backup
     - Crear script que lea `superuser_backup.json`
     - Recrear superusuario con mismo email y password hash
     - Asignar perfil 'Administrador' por defecto

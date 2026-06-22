@@ -1,0 +1,8 @@
+{
+  "email": "test@personal.com.ar",
+  "password": "pbkdf2_sha256$1000000$dfClIl6G2mYbTDF12YTGEJ$KW57w2x7UpQfVe138MUTEaFlq/u9aBBJilonolYVESE=",
+  "first_name": "Luciano",
+  "last_name": "Prueba",
+  "is_staff": true,
+  "is_superuser": true
+}
