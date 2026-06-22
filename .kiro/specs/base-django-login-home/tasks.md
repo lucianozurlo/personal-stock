@@ -207,7 +207,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
   - _Requirements: 1.6, 10.3_
 
 - [ ] 7. Modificar templates HTML para integración Django
-  - [ ] 7.1 Integrar login.html con Django
+  - [x] 7.1 Integrar login.html con Django
     - Agregar `{% load static %}` al inicio de `./templates/login.html`
     - Reemplazar todas las referencias relativas de assets por `{% static 'ruta' %}`
       - `css/login.css` → `{% static 'css/login.css' %}`
@@ -225,7 +225,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./templates/login.html`
     - _Requirements: 5.1, 5.3, 5.5_
 
-  - [ ] 7.2 Integrar home.html con Django - parte 1 (template tags y assets)
+  - [x] 7.2 Integrar home.html con Django - parte 1 (template tags y assets)
     - Agregar `{% load static %}` al inicio de `./templates/home.html`
     - Reemplazar todas las referencias relativas de assets por `{% static 'ruta' %}`
       - `css/styles.css` → `{% static 'css/styles.css' %}`
@@ -236,7 +236,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./templates/home.html`
     - _Requirements: 6.2, 6.4_
 
-  - [ ] 7.3 Integrar home.html con Django - parte 2 (reemplazo de "Benja")
+  - [x] 7.3 Integrar home.html con Django - parte 2 (reemplazo de "Benja")
     - Buscar `<span id="welcomeTitle">Hola, Benja.</span>` en `./templates/home.html`
     - Reemplazar por: `<span id="welcomeTitle">Hola, {{ user.first_name|default:user.username }}.</span>`
     - Buscar el dropdown de usuario (clase `.dd-head`) y reemplazar:
@@ -248,7 +248,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./templates/home.html`
     - _Requirements: 7.2, 7.3, 7.4_
 
-  - [ ] 7.4 Integrar home.html con Django - parte 3 (inyectar window.PS_USER)
+  - [x] 7.4 Integrar home.html con Django - parte 3 (inyectar window.PS_USER)
     - Buscar el `<script src="{% static 'js/app.js' %}"></script>` en `./templates/home.html`
     - Agregar ANTES de ese script:
       ```django

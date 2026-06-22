@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -9,14 +10,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   </head>
   <body>
     <main class="login-page">
       <header class="login-topbar">
         <a class="brand-link" href="login.html" aria-label="Personal Stock">
-          <img class="brand-logo brand-logo-dark" src="img/personal-stock-logo.svg" alt="Personal Stock" />
-          <img class="brand-logo brand-logo-light" src="img/personal-stock-logo-light.svg" alt="Personal Stock" />
+          <img class="brand-logo brand-logo-dark" src="{% static 'img/personal-stock-logo.svg' %}" alt="Personal Stock" />
+          <img class="brand-logo brand-logo-light" src="{% static 'img/personal-stock-logo-light.svg' %}" alt="Personal Stock" />
         </a>
 
         <div class="top-actions">
@@ -38,7 +39,12 @@
             <p>Usá tus credenciales corporativas para continuar.</p>
           </div>
 
-          <form class="login-form" id="loginForm" novalidate>
+          {% if error %}
+          <div class="login-error" style="color: red; margin-bottom: 1rem;">{{ error }}</div>
+          {% endif %}
+
+          <form class="login-form" id="loginForm" method="post" novalidate>
+            {% csrf_token %}
             <div class="field-group">
               <label for="email">Email</label>
               <div class="field">
@@ -57,7 +63,7 @@
             </div>
 
             <div class="form-options">
-              <label class="check"><input type="checkbox" name="remember" /> Recordarme</label>
+              <label class="check"><input type="checkbox" name="remember_me" /> Recordarme</label>
               <a class="text-link" href="#">Olvidé mi contraseña</a>
             </div>
 
@@ -74,6 +80,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite">Login simulado: redirigiendo al home.</div>
 
-    <script src="js/login.js"></script>
+    <script src="{% static 'js/login.js' %}"></script>
   </body>
 </html>

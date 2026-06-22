@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   </head>
 
   <body>
@@ -21,8 +22,8 @@
         <header class="sidebar-header">
           <div class="ws">
             <div class="ws-brand">
-              <img class="brand-logo brand-logo-dark" id="brandLogo" src="img/personal-stock-logo.svg" alt="Personal Stock">
-              <img class="brand-logo brand-logo-light" src="img/personal-stock-logo-light.svg" alt="Personal Stock">
+              <img class="brand-logo brand-logo-dark" id="brandLogo" src="{% static 'img/personal-stock-logo.svg' %}" alt="Personal Stock">
+              <img class="brand-logo brand-logo-light" src="{% static 'img/personal-stock-logo-light.svg' %}" alt="Personal Stock">
               <span class="brand-wordmark">Personal Stock</span>
             </div>
           </div>
@@ -76,8 +77,8 @@
         <main class="app app-main" id="app">
           <header class="topbar">
             <a class="topbar-mobile-brand" href="#" aria-label="Personal Stock">
-              <img class="topbar-logo topbar-logo-dark" src="img/personal-stock-logo.svg" alt="Personal Stock">
-              <img class="topbar-logo topbar-logo-light" src="img/personal-stock-logo-light.svg" alt="Personal Stock">
+              <img class="topbar-logo topbar-logo-dark" src="{% static 'img/personal-stock-logo.svg' %}" alt="Personal Stock">
+              <img class="topbar-logo topbar-logo-light" src="{% static 'img/personal-stock-logo-light.svg' %}" alt="Personal Stock">
             </a>
             <button class="new-chat-btn" id="newChatBtn" type="button"><i class="fa-solid fa-plus"></i> Nueva consulta</button>
             <button class="theme-switch" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="Cambiar tema claro u oscuro">
@@ -90,20 +91,20 @@
             <button class="top-icon-btn" type="button" aria-label="Notificaciones"><i class="fa-regular fa-bell"></i></button>
             <div class="user" id="user">
               <button class="user-btn" id="userBtn" type="button" aria-expanded="false">
-                <span class="avatar">ML</span>
-                <span class="user-name">María López</span>
+                <span class="avatar">{{ user.first_name.0|upper }}{{ user.last_name.0|upper }}</span>
+                <span class="user-name">{{ user.first_name }} {{ user.last_name }}</span>
                 <span class="user-chev"><i class="fa-solid fa-chevron-down"></i></span>
               </button>
               <div class="dropdown" id="dropdown">
-                <div class="dd-head"><span class="avatar">ML</span>
+                <div class="dd-head"><span class="avatar">{{ user.first_name.0|upper }}{{ user.last_name.0|upper }}</span>
                   <div>
-                    <div class="nm">María López</div><small>maria.lopez@personal.com.ar</small>
+                    <div class="nm">{{ user.first_name }} {{ user.last_name }}</div><small>{{ user.email }}</small>
                   </div>
                 </div>
                 <div class="dd-item"><span class="ico"><i class="fa-solid fa-user"></i></span>Perfil</div>
                 <div class="dd-item"><span class="ico"><i class="fa-solid fa-sliders"></i></span>Preferencias</div>
                 <div class="dd-item"><span class="ico"><i class="fa-solid fa-circle-question"></i></span>Ayuda</div>
-                <div class="dd-item danger"><span class="ico"><i class="fa-solid fa-right-from-bracket"></i></span>Cerrar sesión</div>
+                <div class="dd-item danger" onclick="window.location.href='{% url 'core:logout' %}'"><span class="ico"><i class="fa-solid fa-right-from-bracket"></i></span>Cerrar sesión</div>
               </div>
             </div>
           </header>
@@ -111,7 +112,7 @@
           <section class="viewport" id="viewport">
             <section class="intro" id="intro">
               <div class="welcome greet">
-                <h1><span id="welcomeTitle">Hola, Benja.</span><span class="sub">¿Qué necesitás resolver hoy?</span></h1>
+                <h1><span id="welcomeTitle">Hola, {{ user.first_name|default:user.username }}.</span><span class="sub">¿Qué necesitás resolver hoy?</span></h1>
               </div>
 
               <section class="suggestions-shell" aria-label="Accesos rápidos">
@@ -216,7 +217,14 @@
 <!-- js/main.js -->
 
 
-    <script src="js/app.js"></script>
+    <script>
+      window.PS_USER = {
+        firstName: "{{ user.first_name|default:user.username }}",
+        username: "{{ user.username }}",
+        email: "{{ user.email }}"
+      };
+    </script>
+    <script src="{% static 'js/app.js' %}"></script>
 </body>
 
 </html>
