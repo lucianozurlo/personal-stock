@@ -26,7 +26,7 @@ dependencias entre ellos, el orden de implementación, y el estado actual de cad
 
 | #   | Spec                              | Tipo                                  | Estado      |
 | --- | --------------------------------- | ------------------------------------- | ----------- |
-| 1   | base-django-login-home            | Standard Feature (Requirements-first) | sin empezar |
+| 1   | base-django-login-home            | Standard Feature (Requirements-first) | completed   |
 | 2   | usuarios-demo-perfiles-permisos   | Standard Feature (Requirements-first) | sin empezar |
 | 3   | home-chat-orchestrator-contract   | Standard Feature (Requirements-first) | sin empezar |
 | 4   | acciones-trazabilidad-metricas    | Standard Feature (Requirements-first) | sin empezar |

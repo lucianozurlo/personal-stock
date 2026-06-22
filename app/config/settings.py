@@ -124,9 +124,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
-    BASE_DIR.parent / 'templates' / 'css',
-    BASE_DIR.parent / 'templates' / 'js',
-    BASE_DIR.parent / 'templates' / 'img',
+    BASE_DIR.parent / 'templates',
 ]
 
 # Default primary key field type

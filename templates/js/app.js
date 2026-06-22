@@ -30,27 +30,34 @@ const STORAGE_KEY = "comustock";
         },
       };
 
+      if (!window.PS_USER || !window.PS_USER.firstName) {
+        console.error(
+          "PS_USER no está definido. El usuario debe estar autenticado.",
+        );
+        window.location.href = "/login/";
+      }
+
       const RANDOM_GREETINGS = [
-        "Hola Benja!",
+        `Hola ${window.PS_USER.firstName}!`,
         "__TIME_BASED__",
-        "¿Todo bien, Benja?",
-        "¿Cómo va, Benja?",
-        "Ey, Benja, ¿todo ok?",
-        "Che Benja, ¿todo bien?",
-        "Buenas, Benja!",
-        "¿Qué hacés, Benja?",
-        "¿Cómo andás, Benja?",
-        "Benja, ¿todo joya?",
-        "Hola, Benja, ¿cómo va?",
-        "Benja, ¿cómo estás?",
-        "Buenas, Benja, ¿va?",
-        "¿Todo tranqui, Benja?",
-        "Benja, ¿qué contás?",
-        "Hola Benja, ¿todo?",
-        "Ey Benja, ¿cómo va?",
-        "Che, Benja, ¿todo?",
-        "¿Qué onda, Benja?",
-        "Benja, ¿en qué andás?",
+        `¿Todo bien, ${window.PS_USER.firstName}?`,
+        `¿Cómo va, ${window.PS_USER.firstName}?`,
+        `Ey, ${window.PS_USER.firstName}, ¿todo ok?`,
+        `Che ${window.PS_USER.firstName}, ¿todo bien?`,
+        `Buenas, ${window.PS_USER.firstName}!`,
+        `¿Qué hacés, ${window.PS_USER.firstName}?`,
+        `¿Cómo andás, ${window.PS_USER.firstName}?`,
+        `${window.PS_USER.firstName}, ¿todo joya?`,
+        `Hola, ${window.PS_USER.firstName}, ¿cómo va?`,
+        `${window.PS_USER.firstName}, ¿cómo estás?`,
+        `Buenas, ${window.PS_USER.firstName}, ¿va?`,
+        `¿Todo tranqui, ${window.PS_USER.firstName}?`,
+        `${window.PS_USER.firstName}, ¿qué contás?`,
+        `Hola ${window.PS_USER.firstName}, ¿todo?`,
+        `Ey ${window.PS_USER.firstName}, ¿cómo va?`,
+        `Che, ${window.PS_USER.firstName}, ¿todo?`,
+        `¿Qué onda, ${window.PS_USER.firstName}?`,
+        `${window.PS_USER.firstName}, ¿en qué andás?`,
       ];
 
       const N8N_WEBHOOK_URL = "http://localhost:5678/webhook/comustock-chat";
@@ -182,9 +189,10 @@ const STORAGE_KEY = "comustock";
 
       function getTimeBasedGreeting() {
         const hour = new Date().getHours();
-        if (hour >= 5 && hour < 12) return "¡Buen día, Benja!";
-        if (hour >= 12 && hour < 20) return "¡Buenas tardes, Benja!";
-        return "¡Buenas noches, Benja!";
+        const name = window.PS_USER.firstName;
+        if (hour >= 5 && hour < 12) return `¡Buen día, ${name}!`;
+        if (hour >= 12 && hour < 20) return `¡Buenas tardes, ${name}!`;
+        return `¡Buenas noches, ${name}!`;
       }
 
       function setRandomGreeting() {

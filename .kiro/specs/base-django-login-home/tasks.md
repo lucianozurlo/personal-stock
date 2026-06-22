@@ -206,7 +206,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
   - Verificar que las 3 vistas existen y las URLs están configuradas
   - _Requirements: 1.6, 10.3_
 
-- [ ] 7. Modificar templates HTML para integración Django
+- [x] 7. Modificar templates HTML para integración Django
   - [x] 7.1 Integrar login.html con Django
     - Agregar `{% load static %}` al inicio de `./templates/login.html`
     - Reemplazar todas las referencias relativas de assets por `{% static 'ruta' %}`
@@ -264,8 +264,8 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./templates/home.html`
     - _Requirements: 8.1_
 
-- [ ] 8. Modificar JavaScript para usar datos dinámicos
-  - [ ] 8.1 Reemplazar "Benja" en app.js - parte 1 (RANDOM_GREETINGS)
+- [x] 8. Modificar JavaScript para usar datos dinámicos
+  - [x] 8.1 Reemplazar "Benja" en app.js - parte 1 (RANDOM_GREETINGS)
     - Abrir `./templates/js/app.js`
     - Buscar el array `RANDOM_GREETINGS` y reemplazar todas las ocurrencias de `"Benja"` (string literal) por `${window.PS_USER.firstName}` (template literal)
     - Asegurar que todos los strings que contienen "Benja" usan backticks (`) en lugar de comillas simples o dobles
@@ -276,7 +276,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./templates/js/app.js`
     - _Requirements: 8.2, 8.4, 8.5_
 
-  - [ ] 8.2 Reemplazar "Benja" en app.js - parte 2 (getTimeBasedGreeting)
+  - [x] 8.2 Reemplazar "Benja" en app.js - parte 2 (getTimeBasedGreeting)
     - Buscar la función `getTimeBasedGreeting()` en `./templates/js/app.js`
     - Reemplazar todas las ocurrencias de `"Benja"` en los strings de retorno por `${window.PS_USER.firstName}` o `${name}` si se define una variable local
     - Ejemplo:
@@ -293,7 +293,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./templates/js/app.js`
     - _Requirements: 8.3, 8.5_
 
-  - [ ] 8.3 Agregar validación de PS_USER en app.js
+  - [x] 8.3 Agregar validación de PS_USER en app.js
     - Al inicio de `./templates/js/app.js` (después de constantes, antes de funciones), agregar:
       ```javascript
       if (!window.PS_USER || !window.PS_USER.firstName) {
@@ -307,7 +307,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./templates/js/app.js`
     - _Requirements: 8.1_
 
-- [ ] 9. Checkpoint - Migraciones y creación de superusuario
+- [x] 9. Checkpoint - Migraciones y creación de superusuario
   - Ejecutar `python manage.py migrate` y verificar que `db.sqlite3` contiene las tablas de Django (auth_user, django_session, etc.)
   - Ejecutar `python manage.py createsuperuser` y crear usuario de prueba con:
     - Username (email): test@personal.com.ar
@@ -318,7 +318,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
   - Verificar que el usuario existe en la base de datos
   - _Requirements: 1.6, 4.3_
 
-- [ ] 10. Verificación manual del flujo completo
+- [x] 10. Verificación manual del flujo completo
   - Ejecutar `python manage.py runserver`
   - Acceder a `http://localhost:8000/` sin login → debe redirigir a `/login/`
   - Ingresar credenciales incorrectas → debe mostrar mensaje de error "Email o contraseña incorrectos"
@@ -333,7 +333,7 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
   - _Requirements: 4.2, 4.3, 4.4, 4.5, 4.6, 5.3, 5.5, 5.6, 6.4, 6.5, 7.3, 9.2, 9.3, 9.4_
 
 - [ ] 11. Escribir tests unitarios básicos
-  - [ ] 11.1 Escribir tests de autenticación en core/tests.py
+  - [x] 11.1 Escribir tests de autenticación en core/tests.py
     - Implementar `test_login_view_get()`: verifica que GET `/login/` retorna 200 y renderiza `login.html`
     - Implementar `test_login_view_post_valid()`: crea usuario, POST con credenciales válidas, verifica redirect a `/` y sesión creada
     - Implementar `test_login_view_post_invalid()`: POST con credenciales inválidas, verifica status 200 y contexto con `error`
@@ -344,14 +344,14 @@ La secuencia sigue los 10 pasos del bootstrap definidos en el design.md, dividid
     - Archivos esperados: `./app/core/tests.py`
     - _Requirements: 4.2, 4.3, 4.4, 4.5, 4.6, 5.1, 5.5, 5.6, 6.1, 6.4, 6.5_
 
-  - [ ] 11.2 Escribir tests de configuración en core/tests.py
+  - [x] 11.2 Escribir tests de configuración en core/tests.py
     - Implementar `test_static_files_configuration()`: verifica que `STATICFILES_DIRS` contiene las 3 rutas correctas
     - Implementar `test_template_configuration()`: verifica que `TEMPLATES[0]['DIRS']` contiene `BASE_DIR.parent / 'templates'`
     - Ejecutar `python manage.py test core` y verificar que todos pasan
     - Archivos esperados: `./app/core/tests.py`
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1_
 
-- [ ] 12. Checkpoint final - Validar contra requirements.md
+- [x] 12. Checkpoint final - Validar contra requirements.md
   - Revisar cada requirement (1-10) en `requirements.md` y verificar que todos los criterios de aceptación están cumplidos
   - Ejecutar `python manage.py check` sin errores
   - Ejecutar `python manage.py test` y verificar que todos los tests pasan (si se implementaron)
