@@ -10,10 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import logging
 import os
 from pathlib import Path
 
 import dj_database_url
+
+
+class _ChatViewFormatter(logging.Formatter):
+    """Formatter that appends extra context fields when present in the LogRecord."""
+    _EXTRA = ('user_id', 'conversation_id', 'error_type', 'agent_used')
+
+    def format(self, record):
+        msg = f"[{record.levelname}] {record.name}: {record.getMessage()}"
+        ctx = {k: getattr(record, k) for k in self._EXTRA if hasattr(record, k)}
+        return f"{msg} | {ctx}" if ctx else msg
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'core.User'
@@ -143,3 +155,28 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 LOGIN_URL = '/login/'
+
+FIXTURE_DIRS = [BASE_DIR / 'fixtures']
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'chat_verbose': {
+            '()': _ChatViewFormatter,
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'chat_verbose',
+        },
+    },
+    'loggers': {
+        'core.views': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}

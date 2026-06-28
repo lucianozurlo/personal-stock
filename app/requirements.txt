@@ -3,3 +3,6 @@ dj-database-url==3.1.2
 asgiref==3.11.1
 sqlparse==0.5.5
 hypothesis[django]
+djangorestframework==3.15.2
+requests==2.32.3
+bleach==6.1.0

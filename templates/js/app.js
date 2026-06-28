@@ -60,7 +60,7 @@ const STORAGE_KEY = "comustock";
         `${window.PS_USER.firstName}, ¿en qué andás?`,
       ];
 
-      const N8N_WEBHOOK_URL = "http://localhost:5678/webhook/comustock-chat";
+      const CHAT_API_URL = '/api/chat/';
 
 // Estado global de la aplicación
       let typingTimeout = null;
@@ -799,7 +799,42 @@ const STORAGE_KEY = "comustock";
         return div;
       }
 
+      function getCsrfToken() {
+        const name = "csrftoken";
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+          const [key, value] = cookie.trim().split("=");
+          if (key === name) {
+            return decodeURIComponent(value);
+          }
+        }
+        return "";
+      }
+
       // ─── Comunicación con n8n ─────────────────────────────────────────────────
+
+      function renderAssistantMessage(output, metadata) {
+        const row = document.createElement("div");
+        row.className = "message-row assistant";
+        const bubble = document.createElement("div");
+        bubble.className = "message-bubble";
+        // html_render: true in MVP 1 — output is sanitized HTML from Django
+        bubble.innerHTML = output || "Sin respuesta.";
+        row.appendChild(bubble);
+        messages.appendChild(row);
+        scrollToBottom();
+        console.log("Agent metadata:", metadata);
+      }
+
+      function displayError(errorMessage) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "assistant-message error-message";
+        errorDiv.innerHTML = `<p><strong>Error</strong></p><p>${errorMessage}</p>`;
+        messages.appendChild(errorDiv);
+        scrollToBottom();
+        if (typeof removeTypingIndicator === "function") removeTypingIndicator();
+        saveMessages();
+      }
 
       async function showTypingAndReply(userText) {
         isAwaitingResponse = true;
@@ -808,49 +843,46 @@ const STORAGE_KEY = "comustock";
         const typingRow = appendMessage("assistant", "", { typing: true });
 
         try {
-          const resp = await fetch(N8N_WEBHOOK_URL, {
+          const resp = await fetch(CHAT_API_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ query: userText }),
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCsrfToken(),
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({ query: userText, agentType: "auto" }),
           });
 
-          const raw = await resp.text();
+          const bodyText = await resp.text();
 
           if (!resp.ok) {
-            throw new Error(`HTTP ${resp.status} - ${raw || "sin body"}`);
+            throw new Error(`HTTP ${resp.status} - ${bodyText || "sin body"}`);
           }
 
-          if (!raw.trim()) {
+          if (!bodyText.trim()) {
             throw new Error("n8n respondió 200 pero con body vacío");
           }
 
           let data;
           try {
-            data = JSON.parse(raw);
+            data = JSON.parse(bodyText);
           } catch {
-            throw new Error(`La respuesta no es JSON: ${raw}`);
+            throw new Error(`La respuesta no es JSON: ${bodyText}`);
           }
 
-          const result = Array.isArray(data) ? data[0] : data;
-          const replyText =
-            result.reply || result.output || result.text || result.response || "Sin respuesta.";
+          if (data.error) {
+            typingRow.remove();
+            displayError(data.error);
+            return;
+          }
 
           typingRow.remove();
-
-          // Crear fila con contenido renderizado (markdown → HTML)
-          const row = document.createElement("div");
-          row.className = "message-row assistant";
-          const bubble = document.createElement("div");
-          bubble.className = "message-bubble";
-          bubble.appendChild(renderMarkdown(replyText));
-          row.appendChild(bubble);
-          messages.appendChild(row);
-          scrollToBottom();
+          renderAssistantMessage(data.output, data.metadata);
 
         } catch (err) {
           console.error("Error real contra n8n:", err);
           typingRow.remove();
-          appendMessage("assistant", `Error conectando con n8n: ${err.message}`);
+          displayError(`Error conectando con n8n: ${err.message}`);
         }
 
         saveMessages();

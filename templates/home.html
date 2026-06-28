@@ -99,6 +99,8 @@
                 <div class="dd-head"><span class="avatar">{{ user.first_name.0|upper }}{{ user.last_name.0|upper }}</span>
                   <div>
                     <div class="nm">{{ user.first_name }} {{ user.last_name }}</div><small>{{ user.email }}</small>
+                    <small>{{ perfil }}</small>
+                    {% if perfil == 'Usuario IC' and roles %}<small>{% for r in roles %}{{ r.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</small>{% endif %}
                   </div>
                 </div>
                 <div class="dd-item"><span class="ico"><i class="fa-solid fa-user"></i></span>Perfil</div>
@@ -221,7 +223,9 @@
       window.PS_USER = {
         firstName: "{{ user.first_name|default:user.username }}",
         username: "{{ user.username }}",
-        email: "{{ user.email }}"
+        email: "{{ user.email }}",
+        perfil: "{{ perfil|escapejs }}",
+        roles: [{% for r in ps_user_data.roles %}"{{ r|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}]
       };
     </script>
     <script src="{% static 'js/app.js' %}"></script>

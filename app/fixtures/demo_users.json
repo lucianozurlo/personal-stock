@@ -1,0 +1,1627 @@
+[
+  {"model": "core.role", "pk": 1, "fields": {"name": "Diseñador", "description": ""}},
+  {"model": "core.role", "pk": 2, "fields": {"name": "Desarrollador", "description": ""}},
+  {"model": "core.role", "pk": 3, "fields": {"name": "Redactor", "description": ""}},
+  {"model": "core.role", "pk": 4, "fields": {"name": "Productor", "description": ""}},
+  {"model": "core.role", "pk": 5, "fields": {"name": "Gerente Cultura", "description": ""}},
+  {"model": "core.role", "pk": 6, "fields": {"name": "Gerente IC", "description": ""}},
+  {"model": "core.role", "pk": 7, "fields": {"name": "Especialista", "description": ""}},
+
+  {
+    "model": "core.user", "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": true,
+      "username": "comustock.ci@gmail.com",
+      "first_name": "Luciano", "last_name": "Zurlo",
+      "email": "comustock.ci@gmail.com",
+      "is_staff": true, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Administrador", "cargo": "Diseñador UX/UI",
+      "es_focus": true, "areas_focus": "Diseño;Desarrollo",
+      "es_aprobador_default": false, "puede_aprobar": true,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.uci1@gmail.com",
+      "first_name": "Diego", "last_name": "Ferrari",
+      "email": "comustock.uci1@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Redactor Senior",
+      "es_focus": true, "areas_focus": "Comunicación Interna",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [3]
+    }
+  },
+  {
+    "model": "core.user", "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.uci2@gmail.com",
+      "first_name": "Sara", "last_name": "Astudillo",
+      "email": "comustock.uci2@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Diseñadora Gráfica",
+      "es_focus": true, "areas_focus": "Diseño Gráfico",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [1]
+    }
+  },
+  {
+    "model": "core.user", "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.uci3@gmail.com",
+      "first_name": "Martín", "last_name": "Caso",
+      "email": "comustock.uci3@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Productor Audiovisual",
+      "es_focus": true, "areas_focus": "Producción",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [4]
+    }
+  },
+  {
+    "model": "core.user", "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.uci4@gmail.com",
+      "first_name": "Sebastián", "last_name": "Álvarez Hincaipié",
+      "email": "comustock.uci4@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Productor de Eventos",
+      "es_focus": true, "areas_focus": "Eventos",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [4]
+    }
+  },
+  {
+    "model": "core.user", "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.uci5@gmail.com",
+      "first_name": "Emiliano", "last_name": "Zabuski",
+      "email": "comustock.uci5@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Redactor Creativo",
+      "es_focus": true, "areas_focus": "Creatividad",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [3]
+    }
+  },
+  {
+    "model": "core.user", "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.g2@gmail.com",
+      "first_name": "Jonathan", "last_name": "Ferraro",
+      "email": "comustock.g2@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Gerente de Cultura",
+      "es_focus": true, "areas_focus": "Cultura Organizacional",
+      "es_aprobador_default": true, "puede_aprobar": true,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [5]
+    }
+  },
+  {
+    "model": "core.user", "pk": 8,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.g1@gmail.com",
+      "first_name": "Luciana", "last_name": "Dau",
+      "email": "comustock.g1@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Gerente de CI",
+      "es_focus": true, "areas_focus": "Comunicación Interna",
+      "es_aprobador_default": true, "puede_aprobar": true,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [6]
+    }
+  },
+  {
+    "model": "core.user", "pk": 9,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.u1@gmail.com",
+      "first_name": "Pablo", "last_name": "Giglio",
+      "email": "comustock.u1@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Analista de Datos",
+      "es_focus": false, "areas_focus": "IT",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 10,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.u2@gmail.com",
+      "first_name": "Javier", "last_name": "Vulich",
+      "email": "comustock.u2@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Ingeniero de Redes",
+      "es_focus": false, "areas_focus": "Infraestructura",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 11,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.u3@gmail.com",
+      "first_name": "Sebastián", "last_name": "Marzico",
+      "email": "comustock.u3@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Especialista en Seguridad",
+      "es_focus": false, "areas_focus": "Seguridad IT",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 12,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$i5wGVErw2e12yky5IbAFk9$DGAIKF2VlMnr+V+YQvUwdziPXE8O7d2Kpe1eq+yvXW4=",
+      "last_login": null, "is_superuser": false,
+      "username": "comustock.u4@gmail.com",
+      "first_name": "Santiago", "last_name": "Gugger",
+      "email": "comustock.u4@gmail.com",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Developer Backend",
+      "es_focus": false, "areas_focus": "Desarrollo",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+
+  {
+    "model": "core.user", "pk": 13,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user13@personalstock.local",
+      "first_name": "Alejandro", "last_name": "García",
+      "email": "demo.user13@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Administrador", "cargo": "Director de Operaciones",
+      "es_focus": true, "areas_focus": "Operaciones",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 14,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user14@personalstock.local",
+      "first_name": "Gabriela", "last_name": "Fernández",
+      "email": "demo.user14@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Administrador", "cargo": "Coordinadora de Proyectos",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 15,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user15@personalstock.local",
+      "first_name": "Rodrigo", "last_name": "Martínez",
+      "email": "demo.user15@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Administrador", "cargo": "Jefe de Sistemas",
+      "es_focus": true, "areas_focus": "IT",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+
+  {
+    "model": "core.user", "pk": 16,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user16@personalstock.local",
+      "first_name": "Valeria", "last_name": "Rodríguez",
+      "email": "demo.user16@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Desarrolladora Web",
+      "es_focus": true, "areas_focus": "Desarrollo",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [2]
+    }
+  },
+  {
+    "model": "core.user", "pk": 17,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user17@personalstock.local",
+      "first_name": "Carlos", "last_name": "Sánchez",
+      "email": "demo.user17@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Especialista en Contenido",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [7]
+    }
+  },
+  {
+    "model": "core.user", "pk": 18,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user18@personalstock.local",
+      "first_name": "Florencia", "last_name": "Gómez",
+      "email": "demo.user18@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Diseñadora Visual",
+      "es_focus": true, "areas_focus": "Diseño",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [1]
+    }
+  },
+  {
+    "model": "core.user", "pk": 19,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user19@personalstock.local",
+      "first_name": "Marcos", "last_name": "Torres",
+      "email": "demo.user19@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Redactor de Contenidos",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [3]
+    }
+  },
+  {
+    "model": "core.user", "pk": 20,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user20@personalstock.local",
+      "first_name": "Laura", "last_name": "Romero",
+      "email": "demo.user20@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Productora Audiovisual",
+      "es_focus": true, "areas_focus": "Producción;Audiovisual",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [4]
+    }
+  },
+  {
+    "model": "core.user", "pk": 21,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user21@personalstock.local",
+      "first_name": "Nicolás", "last_name": "Acosta",
+      "email": "demo.user21@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Desarrollador Full Stack",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [2]
+    }
+  },
+  {
+    "model": "core.user", "pk": 22,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user22@personalstock.local",
+      "first_name": "Sofía", "last_name": "Benítez",
+      "email": "demo.user22@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Diseñadora UX",
+      "es_focus": true, "areas_focus": "UX;Diseño",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [1]
+    }
+  },
+  {
+    "model": "core.user", "pk": 23,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user23@personalstock.local",
+      "first_name": "Tomás", "last_name": "Moreno",
+      "email": "demo.user23@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Redactor Publicitario",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [3]
+    }
+  },
+  {
+    "model": "core.user", "pk": 24,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user24@personalstock.local",
+      "first_name": "Camila", "last_name": "Ríos",
+      "email": "demo.user24@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Especialista en Analytics",
+      "es_focus": true, "areas_focus": "Analytics",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [7]
+    }
+  },
+  {
+    "model": "core.user", "pk": 25,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user25@personalstock.local",
+      "first_name": "Eduardo", "last_name": "Molina",
+      "email": "demo.user25@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Coordinador de Cultura",
+      "es_focus": true, "areas_focus": "Cultura Organizacional",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [5]
+    }
+  },
+  {
+    "model": "core.user", "pk": 26,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user26@personalstock.local",
+      "first_name": "Agustina", "last_name": "Suárez",
+      "email": "demo.user26@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario IC", "cargo": "Coordinadora CI",
+      "es_focus": true, "areas_focus": "Comunicación Interna",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": [6]
+    }
+  },
+
+  {
+    "model": "core.user", "pk": 27,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user27@personalstock.local",
+      "first_name": "Hernán", "last_name": "Castro",
+      "email": "demo.user27@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Analista Comercial",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 28,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user28@personalstock.local",
+      "first_name": "Yamila", "last_name": "Vega",
+      "email": "demo.user28@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Asistente Administrativa",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 29,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user29@personalstock.local",
+      "first_name": "Omar", "last_name": "Medina",
+      "email": "demo.user29@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Operador de Logística",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 30,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user30@personalstock.local",
+      "first_name": "Patricia", "last_name": "Herrera",
+      "email": "demo.user30@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Técnica en RRHH",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 31,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user31@personalstock.local",
+      "first_name": "Leandro", "last_name": "Rojas",
+      "email": "demo.user31@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Encargado de Depósito",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 32,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user32@personalstock.local",
+      "first_name": "Karina", "last_name": "Cruz",
+      "email": "demo.user32@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Coordinadora de Ventas",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 33,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user33@personalstock.local",
+      "first_name": "Fabián", "last_name": "Ortega",
+      "email": "demo.user33@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Técnico de Mantenimiento",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 34,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user34@personalstock.local",
+      "first_name": "Daniela", "last_name": "Paredes",
+      "email": "demo.user34@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Analista de Marketing",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 35,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user35@personalstock.local",
+      "first_name": "Walter", "last_name": "Díaz",
+      "email": "demo.user35@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Supervisor de Planta",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 36,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user36@personalstock.local",
+      "first_name": "Verónica", "last_name": "López",
+      "email": "demo.user36@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Administrativa Contable",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 37,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user37@personalstock.local",
+      "first_name": "Ignacio", "last_name": "Pérez",
+      "email": "demo.user37@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Operador de Call Center",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 38,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user38@personalstock.local",
+      "first_name": "Natalia", "last_name": "González",
+      "email": "demo.user38@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Asistente de Compras",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 39,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user39@personalstock.local",
+      "first_name": "Bruno", "last_name": "Vargas",
+      "email": "demo.user39@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Técnico Informático",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 40,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user40@personalstock.local",
+      "first_name": "Mónica", "last_name": "Ramírez",
+      "email": "demo.user40@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Recepcionista",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 41,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user41@personalstock.local",
+      "first_name": "Jorge", "last_name": "Flores",
+      "email": "demo.user41@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Operario de Producción",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 42,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user42@personalstock.local",
+      "first_name": "Isabel", "last_name": "Salinas",
+      "email": "demo.user42@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Analista Financiera",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 43,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user43@personalstock.local",
+      "first_name": "Gastón", "last_name": "Nieto",
+      "email": "demo.user43@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Vendedor",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 44,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user44@personalstock.local",
+      "first_name": "Valentina", "last_name": "Figueroa",
+      "email": "demo.user44@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Asistente Legal",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 45,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user45@personalstock.local",
+      "first_name": "Pablo", "last_name": "Luna",
+      "email": "demo.user45@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Operador de Sistemas",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 46,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user46@personalstock.local",
+      "first_name": "Rocío", "last_name": "Guerrero",
+      "email": "demo.user46@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Analista de RRHH",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 47,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user47@personalstock.local",
+      "first_name": "Diego", "last_name": "Castillo",
+      "email": "demo.user47@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Auxiliar Contable",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 48,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user48@personalstock.local",
+      "first_name": "Elena", "last_name": "Bravo",
+      "email": "demo.user48@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Secretaria Ejecutiva",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 49,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user49@personalstock.local",
+      "first_name": "Julián", "last_name": "Campos",
+      "email": "demo.user49@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Operario Calificado",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 50,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user50@personalstock.local",
+      "first_name": "Tamara", "last_name": "Espinoza",
+      "email": "demo.user50@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Asistente de Gerencia",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 51,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user51@personalstock.local",
+      "first_name": "Valentín", "last_name": "Fuentes",
+      "email": "demo.user51@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Técnico Electricista",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 52,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user52@personalstock.local",
+      "first_name": "Ximena", "last_name": "Delgado",
+      "email": "demo.user52@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Coordinadora Logística",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 53,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user53@personalstock.local",
+      "first_name": "Alejandro", "last_name": "Serrano",
+      "email": "demo.user53@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Repositor",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 54,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user54@personalstock.local",
+      "first_name": "Bárbara", "last_name": "Vera",
+      "email": "demo.user54@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Diseñadora Gráfica Junior",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 55,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user55@personalstock.local",
+      "first_name": "Carlos", "last_name": "Contreras",
+      "email": "demo.user55@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Usuario", "cargo": "Auxiliar de Almacén",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+
+  {
+    "model": "core.user", "pk": 56,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user56@personalstock.local",
+      "first_name": "Eduardo", "last_name": "Alvarado",
+      "email": "demo.user56@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Gerente de Área",
+      "es_focus": true, "areas_focus": "Operaciones",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 57,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user57@personalstock.local",
+      "first_name": "Florencia", "last_name": "Pineda",
+      "email": "demo.user57@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Supervisora de Calidad",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 58,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user58@personalstock.local",
+      "first_name": "Gastón", "last_name": "Cortés",
+      "email": "demo.user58@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Jefe de Proyecto",
+      "es_focus": true, "areas_focus": "Proyectos",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 59,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user59@personalstock.local",
+      "first_name": "Hernán", "last_name": "Mendoza",
+      "email": "demo.user59@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Líder Técnico",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 60,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user60@personalstock.local",
+      "first_name": "Isabel", "last_name": "Palacios",
+      "email": "demo.user60@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Responsable de Formación",
+      "es_focus": true, "areas_focus": "Formación",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 61,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user61@personalstock.local",
+      "first_name": "Jorge", "last_name": "Quintero",
+      "email": "demo.user61@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Coordinador de Ventas",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 62,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user62@personalstock.local",
+      "first_name": "Karina", "last_name": "Valencia",
+      "email": "demo.user62@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Analista Senior",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 63,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user63@personalstock.local",
+      "first_name": "Leandro", "last_name": "Mejía",
+      "email": "demo.user63@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Responsable de Área",
+      "es_focus": true, "areas_focus": "Operaciones",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 64,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user64@personalstock.local",
+      "first_name": "Mónica", "last_name": "Heredia",
+      "email": "demo.user64@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Jefa de Administración",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 65,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user65@personalstock.local",
+      "first_name": "Nicolás", "last_name": "Cárdenas",
+      "email": "demo.user65@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Especialista TI",
+      "es_focus": true, "areas_focus": "IT",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 66,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user66@personalstock.local",
+      "first_name": "Omar", "last_name": "Sandoval",
+      "email": "demo.user66@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Jefe de Logística",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 67,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user67@personalstock.local",
+      "first_name": "Patricia", "last_name": "Jiménez",
+      "email": "demo.user67@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Gerenta de Personas",
+      "es_focus": true, "areas_focus": "RRHH",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 68,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user68@personalstock.local",
+      "first_name": "Rodrigo", "last_name": "Trujillo",
+      "email": "demo.user68@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Responsable de Seguridad",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 69,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user69@personalstock.local",
+      "first_name": "Sofía", "last_name": "Peña",
+      "email": "demo.user69@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Coordinadora de Proyectos",
+      "es_focus": true, "areas_focus": "Proyectos",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 70,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user70@personalstock.local",
+      "first_name": "Tomás", "last_name": "Gallegos",
+      "email": "demo.user70@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Analista de Procesos",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 71,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user71@personalstock.local",
+      "first_name": "Valeria", "last_name": "Villanueva",
+      "email": "demo.user71@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Supervisora Administrativa",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 72,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user72@personalstock.local",
+      "first_name": "Walter", "last_name": "Pacheco",
+      "email": "demo.user72@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Responsable de Compras",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 73,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user73@personalstock.local",
+      "first_name": "Agustina", "last_name": "Estrada",
+      "email": "demo.user73@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Analista de Marketing Digital",
+      "es_focus": true, "areas_focus": "Marketing",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 74,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user74@personalstock.local",
+      "first_name": "Bruno", "last_name": "Maldonado",
+      "email": "demo.user74@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Líder de Equipo",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 75,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user75@personalstock.local",
+      "first_name": "Camila", "last_name": "Solis",
+      "email": "demo.user75@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Especialista en Calidad",
+      "es_focus": true, "areas_focus": "Calidad",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 76,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user76@personalstock.local",
+      "first_name": "Daniela", "last_name": "Pedraza",
+      "email": "demo.user76@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Jefa de Marketing",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 77,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user77@personalstock.local",
+      "first_name": "Fabián", "last_name": "Orozco",
+      "email": "demo.user77@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Responsable de Infraestructura",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 78,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user78@personalstock.local",
+      "first_name": "Gabriela", "last_name": "Andrade",
+      "email": "demo.user78@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Coordinadora de RRHH",
+      "es_focus": true, "areas_focus": "RRHH",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 79,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user79@personalstock.local",
+      "first_name": "Julio", "last_name": "Peralta",
+      "email": "demo.user79@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Gerente Comercial",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 80,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user80@personalstock.local",
+      "first_name": "Laura", "last_name": "Aguirre",
+      "email": "demo.user80@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Heavy user", "cargo": "Líder de Desarrollo",
+      "es_focus": true, "areas_focus": "Desarrollo",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+
+  {
+    "model": "core.user", "pk": 81,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user81@personalstock.local",
+      "first_name": "Marcos", "last_name": "Bermúdez",
+      "email": "demo.user81@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director de Área",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 82,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user82@personalstock.local",
+      "first_name": "Natalia", "last_name": "Zamora",
+      "email": "demo.user82@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Personas",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 83,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user83@personalstock.local",
+      "first_name": "Pablo", "last_name": "Cifuentes",
+      "email": "demo.user83@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director Financiero",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 84,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user84@personalstock.local",
+      "first_name": "Rocío", "last_name": "Villalobos",
+      "email": "demo.user84@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Operaciones",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 85,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user85@personalstock.local",
+      "first_name": "Sebastián", "last_name": "Arroyo",
+      "email": "demo.user85@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director de Tecnología",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 86,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user86@personalstock.local",
+      "first_name": "Tamara", "last_name": "Chaparro",
+      "email": "demo.user86@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Sustentabilidad",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 87,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user87@personalstock.local",
+      "first_name": "Valentín", "last_name": "Navarro",
+      "email": "demo.user87@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director Comercial",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 88,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user88@personalstock.local",
+      "first_name": "Verónica", "last_name": "Maldonado",
+      "email": "demo.user88@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Marketing",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 89,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user89@personalstock.local",
+      "first_name": "Walter", "last_name": "Solis",
+      "email": "demo.user89@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director de Logística",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 90,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user90@personalstock.local",
+      "first_name": "Ximena", "last_name": "Pedraza",
+      "email": "demo.user90@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora Jurídica",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 91,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user91@personalstock.local",
+      "first_name": "Alejandro", "last_name": "Orozco",
+      "email": "demo.user91@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director de Estrategia",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 92,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user92@personalstock.local",
+      "first_name": "Bárbara", "last_name": "Andrade",
+      "email": "demo.user92@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Innovación",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 93,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user93@personalstock.local",
+      "first_name": "Carlos", "last_name": "Peralta",
+      "email": "demo.user93@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director de Manufactura",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 94,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user94@personalstock.local",
+      "first_name": "Daniela", "last_name": "Aguirre",
+      "email": "demo.user94@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Calidad",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 95,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user95@personalstock.local",
+      "first_name": "Eduardo", "last_name": "Bermúdez",
+      "email": "demo.user95@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director de Proyectos",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 96,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user96@personalstock.local",
+      "first_name": "Florencia", "last_name": "Zamora",
+      "email": "demo.user96@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Comunicación",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 97,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user97@personalstock.local",
+      "first_name": "Gastón", "last_name": "Ibáñez",
+      "email": "demo.user97@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director General",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 98,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user98@personalstock.local",
+      "first_name": "Hernán", "last_name": "Ruiz",
+      "email": "demo.user98@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Director de Relaciones Institucionales",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 99,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user99@personalstock.local",
+      "first_name": "Isabel", "last_name": "Guzmán",
+      "email": "demo.user99@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Compras",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  },
+  {
+    "model": "core.user", "pk": 100,
+    "fields": {
+      "password": "!", "last_login": null, "is_superuser": false,
+      "username": "demo.user100@personalstock.local",
+      "first_name": "Julia", "last_name": "Tapia",
+      "email": "demo.user100@personalstock.local",
+      "is_staff": false, "is_active": true,
+      "date_joined": "2026-06-23T00:00:00Z",
+      "perfil": "Macro", "cargo": "Directora de Auditoría",
+      "es_focus": false, "areas_focus": "",
+      "es_aprobador_default": false, "puede_aprobar": false,
+      "avatar_url": "", "memoria_habilitada": true,
+      "groups": [], "user_permissions": [], "roles": []
+    }
+  }
+]
