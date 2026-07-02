@@ -182,6 +182,18 @@ running → needs_input (si agente requiere input adicional)
 running → pending_approval (si agente requiere aprobación)
 ```
 
+> **⚠️ Limitación MVP 1 (Decision 7 en requirements.md):** Las transiciones que pasan por
+> `running` describen el diseño objetivo, pero **NO se ejercitan en MVP 1**. En la arquitectura
+> real (spec cerrado `home-chat-orchestrator-contract`), la clasificación de intención y la
+> selección de agente las hace **n8n**, no Django. Por lo tanto:
+>
+> - `chat_view` transiciona `created → completed` o `created → failed` directamente (nunca por `running`).
+> - `TraceabilityManager.update_run_agent_selection()` existe y está unit-testeado, pero **no se
+>   invoca desde `chat_view`** (queda preparado para MVP posterior).
+> - Los campos `detected_intention`, `selection_reason` y `permissions_applied` quedan **preparados
+>   pero no poblados**; solo se poblarían si un contrato futuro de n8n los expone.
+> - `selected_agent` **sí** se puebla a posteriori desde `metadata.agent_used` de la respuesta de n8n.
+
 ### 2. MetricsAggregator (Service Class)
 
 **Purpose**: Genera métricas agregadas a partir de WorkflowRun y MetricEvent para el endpoint `/api/metrics/`.
@@ -961,6 +973,15 @@ No hay transformaciones de datos con propiedades universales que validen. Por lo
 - **Unit tests**: >80% coverage en `TraceabilityManager`, `MetricsAggregator`
 - **Integration tests**: 100% coverage de endpoints de API
 - **Template tests**: Verificar rendering básico (no visual regression)
+
+> **Interpretación del criterio ">80% coverage" (resuelta en checkpoint tarea 15):** El objetivo
+> es **por componente**, no una línea de corte por archivo. Se cumple con: cobertura de las clases
+> de servicio (`services.py`) ≥80% y cobertura **de comportamiento** de cada endpoint (test de éxito
+>
+> - test de rechazo/error). La cobertura global agregada (~91%) es referencia adicional, no el
+>   criterio. `views.py` a nivel de línea puede quedar por debajo de 80% porque incluye ramas de error
+>   de `chat_view` que pertenecen al spec cerrado `home-chat-orchestrator-contract`; eso no incumple
+>   este objetivo.
 
 ### Test Execution
 

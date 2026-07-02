@@ -1574,3 +1574,763 @@ class ChatViewIntegrationTest(TestCase):
         self.assertEqual(response.status_code, 503)
         data = response.json()
         self.assertIn('error', data)
+
+
+# ─── Unit tests: acciones-trazabilidad-metricas / TraceabilityManager ────────
+from core.models import WorkflowRun
+from core.services import TraceabilityManager
+
+
+class TraceabilityManagerTest(TestCase):
+    """
+    Unit tests para TraceabilityManager — tarea 11.1 (acciones-trazabilidad-metricas).
+    Validates: Requirements 1.1, 2.2, 2.3, 2.4, 2.5
+    """
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='trace_test@example.com',
+            email='trace_test@example.com',
+            password='testpass123',
+            first_name='Trace',
+            last_name='Tester',
+            perfil='Administrador',
+        )
+
+    def test_create_run_sets_initial_state(self):
+        """create_run() crea WorkflowRun con final_state='created' y state_history inicial (Req 1.1, 2.2)"""
+        run = TraceabilityManager.create_run(
+            user=self.user,
+            conversation_id='conv-test00-abc123',
+            user_message='¿Qué comunicaciones hay?',
+            agent_type='auto',
+        )
+        self.assertIsNotNone(run)
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.CREATED)
+        self.assertEqual(len(run.state_history), 1)
+        self.assertEqual(run.state_history[0]['state'], WorkflowRun.ExecutionState.CREATED)
+
+    def test_update_run_agent_selection_transitions_to_running(self):
+        """update_run_agent_selection() transiciona created -> running (Req 2.3)"""
+        run = TraceabilityManager.create_run(
+            user=self.user,
+            conversation_id='conv-test01-abc123',
+            user_message='Consulta',
+            agent_type='auto',
+        )
+        TraceabilityManager.update_run_agent_selection(
+            run_id=run.id,
+            detected_intention='consulta_historial_mails',
+            selected_agent='rag-mails',
+            selection_reason="User query matches 'consulta_historial_mails' intention pattern",
+            permissions_applied='profile: Administrador, sin restricciones',
+        )
+        run.refresh_from_db()
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.RUNNING)
+        self.assertEqual(run.selected_agent, 'rag-mails')
+        self.assertEqual(run.detected_intention, 'consulta_historial_mails')
+        states = [entry['state'] for entry in run.state_history]
+        self.assertEqual(
+            states,
+            [WorkflowRun.ExecutionState.CREATED, WorkflowRun.ExecutionState.RUNNING],
+        )
+
+    def test_complete_run_sets_final_state(self):
+        """complete_run() marca final_state='completed' y guarda execution_time_ms (Req 2.4)"""
+        run = TraceabilityManager.create_run(
+            user=self.user,
+            conversation_id='conv-test02-abc123',
+            user_message='Consulta',
+            agent_type='auto',
+        )
+        TraceabilityManager.complete_run(
+            run_id=run.id,
+            agent_response='<p>Respuesta</p>',
+            execution_time_ms=450,
+            metadata={'agent_used': 'rag-mails', 'records_found': 3},
+        )
+        run.refresh_from_db()
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.COMPLETED)
+        self.assertEqual(run.execution_time_ms, 450)
+        self.assertEqual(run.agent_response, '<p>Respuesta</p>')
+
+    def test_fail_run_records_error_message(self):
+        """fail_run() marca final_state='failed' y guarda error_message (Req 2.5, 1.12)"""
+        run = TraceabilityManager.create_run(
+            user=self.user,
+            conversation_id='conv-test03-abc123',
+            user_message='Consulta',
+            agent_type='auto',
+        )
+        TraceabilityManager.fail_run(
+            run_id=run.id,
+            error_message='n8n timeout: Request timed out',
+            execution_time_ms=30000,
+        )
+        run.refresh_from_db()
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.FAILED)
+        self.assertEqual(run.error_message, 'n8n timeout: Request timed out')
+        self.assertEqual(run.execution_time_ms, 30000)
+
+
+# ─── Unit tests: acciones-trazabilidad-metricas / MetricsAggregator ──────────
+from datetime import timedelta
+
+from django.utils import timezone
+
+from core.models import MetricEvent
+from core.services import MetricsAggregator
+
+
+class MetricsAggregatorTest(TestCase):
+    """
+    Unit tests para MetricsAggregator — tarea 11.2 (acciones-trazabilidad-metricas).
+    Validates: Requirements 5.3, 5.4, 5.6
+    """
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='metrics_test@example.com',
+            email='metrics_test@example.com',
+            password='testpass123',
+            first_name='Metrics',
+            last_name='Tester',
+            perfil='Administrador',
+        )
+
+    def test_metrics_aggregator_counts_executions_by_agent(self):
+        """get_summary_metrics() cuenta ejecuciones agrupadas por agente (Req 5.3)"""
+        for agent in ['rag-mails', 'rag-mails', 'trigger-comunicaciones']:
+            run = TraceabilityManager.create_run(
+                user=self.user,
+                conversation_id='conv-metrics-abc',
+                user_message='Consulta',
+                agent_type=agent,
+            )
+            TraceabilityManager.complete_run(
+                run_id=run.id,
+                agent_response='ok',
+                execution_time_ms=100,
+                metadata={},
+            )
+
+        metrics = MetricsAggregator.get_summary_metrics()
+
+        self.assertEqual(metrics['total_executions'], 3)
+        self.assertEqual(metrics['executions_by_agent']['rag-mails'], 2)
+        self.assertEqual(metrics['executions_by_agent']['trigger-comunicaciones'], 1)
+
+    def test_metrics_aggregator_filters_by_date_range(self):
+        """get_summary_metrics(start_date, end_date) filtra por rango de fechas (Req 5.4)"""
+        old_run = TraceabilityManager.create_run(
+            user=self.user,
+            conversation_id='conv-metrics-old',
+            user_message='Consulta vieja',
+            agent_type='rag-mails',
+        )
+        WorkflowRun.objects.filter(id=old_run.id).update(
+            created_at=timezone.now() - timedelta(days=30)
+        )
+
+        TraceabilityManager.create_run(
+            user=self.user,
+            conversation_id='conv-metrics-new',
+            user_message='Consulta reciente',
+            agent_type='rag-mails',
+        )
+
+        start_date = timezone.now() - timedelta(days=1)
+        metrics = MetricsAggregator.get_summary_metrics(start_date=start_date)
+
+        self.assertEqual(metrics['total_executions'], 1)
+
+
+# ─── Integration tests: acciones-trazabilidad-metricas / GET /api/actions/ ───
+
+
+class ApiActionsIntegrationTest(TestCase):
+    """
+    Integration tests para GET /api/actions/ — tarea 12.1 (acciones-trazabilidad-metricas).
+    Validates: Requirements 4.2, 4.5, 4.6
+    """
+
+    def setUp(self):
+        User = get_user_model()
+        self.user1 = User.objects.create_user(
+            username='actions_user1@example.com',
+            email='actions_user1@example.com',
+            password='testpass123',
+            first_name='User',
+            last_name='One',
+            perfil='Usuario',
+        )
+        self.user2 = User.objects.create_user(
+            username='actions_user2@example.com',
+            email='actions_user2@example.com',
+            password='testpass123',
+            first_name='User',
+            last_name='Two',
+            perfil='Usuario',
+        )
+
+    def test_api_actions_returns_only_user_runs(self):
+        """GET /api/actions/ retorna solo las WorkflowRun del usuario autenticado (Req 4.2)"""
+        run1 = TraceabilityManager.create_run(
+            user=self.user1,
+            conversation_id='conv-u1-abc123',
+            user_message='Consulta de user1',
+            agent_type='auto',
+        )
+        TraceabilityManager.create_run(
+            user=self.user2,
+            conversation_id='conv-u2-abc123',
+            user_message='Consulta de user2',
+            agent_type='auto',
+        )
+
+        self.client.force_login(self.user1)
+        response = self.client.get('/api/actions/')
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['count'], 1)
+        ids = [r['id'] for r in data['results']]
+        self.assertIn(run1.id, ids)
+
+    def test_api_actions_requires_authentication(self):
+        """GET /api/actions/ sin autenticación retorna HTTP 401 (Req 4.6)"""
+        response = self.client.get('/api/actions/')
+        self.assertEqual(response.status_code, 401)
+
+    def test_api_actions_paginates_results(self):
+        """GET /api/actions/ pagina resultados: 20 por página + link next (Req 4.5)"""
+        for i in range(25):
+            TraceabilityManager.create_run(
+                user=self.user1,
+                conversation_id=f'conv-page-{i}',
+                user_message=f'Consulta {i}',
+                agent_type='auto',
+            )
+
+        self.client.force_login(self.user1)
+        response = self.client.get('/api/actions/')
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(len(data['results']), 20)
+        self.assertIsNotNone(data['next'])
+
+
+# ─── Integration tests: acciones-trazabilidad-metricas / GET /api/metrics/ ───
+
+
+class ApiMetricsIntegrationTest(TestCase):
+    """
+    Integration tests para GET /api/metrics/ — tarea 12.2 (acciones-trazabilidad-metricas).
+    Validates: Requirements 5.2, 5.3, 5.5
+    """
+
+    def setUp(self):
+        self.usuario = CoreUser.objects.create_user(
+            username='metrics_usuario@example.com',
+            email='metrics_usuario@example.com',
+            password='testpass123',
+            first_name='Metrics',
+            last_name='Usuario',
+            perfil=CoreUser.Profile.USUARIO,
+        )
+        self.administrador = CoreUser.objects.create_user(
+            username='metrics_admin@example.com',
+            email='metrics_admin@example.com',
+            password='testpass123',
+            first_name='Metrics',
+            last_name='Admin',
+            perfil=CoreUser.Profile.ADMINISTRADOR,
+        )
+
+    def test_api_metrics_requires_privileged_profile(self):
+        """Perfil Usuario recibe HTTP 403 al pedir /api/metrics/ (Req 5.2)"""
+        self.client.force_login(self.usuario)
+        response = self.client.get('/api/metrics/')
+
+        self.assertEqual(response.status_code, 403)
+        data = response.json()
+        self.assertIn('error', data)
+
+    def test_api_metrics_allows_administrador(self):
+        """Perfil Administrador recibe HTTP 200 al pedir /api/metrics/ (Req 5.2)"""
+        self.client.force_login(self.administrador)
+        response = self.client.get('/api/metrics/')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_metrics_returns_aggregated_data(self):
+        """
+        /api/metrics/ retorna estructura agregada correcta con conteos por
+        agente/estado y error_rate (Req 5.3, 5.5)
+        """
+        run1 = TraceabilityManager.create_run(
+            user=self.usuario,
+            conversation_id='conv-metrics-api-1',
+            user_message='Consulta 1',
+            agent_type='rag-mails',
+        )
+        TraceabilityManager.complete_run(
+            run_id=run1.id,
+            agent_response='ok',
+            execution_time_ms=100,
+            metadata={},
+        )
+
+        run2 = TraceabilityManager.create_run(
+            user=self.usuario,
+            conversation_id='conv-metrics-api-2',
+            user_message='Consulta 2',
+            agent_type='rag-mails',
+        )
+        TraceabilityManager.fail_run(
+            run_id=run2.id,
+            error_message='n8n timeout',
+            execution_time_ms=200,
+        )
+
+        run3 = TraceabilityManager.create_run(
+            user=self.usuario,
+            conversation_id='conv-metrics-api-3',
+            user_message='Consulta 3',
+            agent_type='trigger-comunicaciones',
+        )
+        TraceabilityManager.complete_run(
+            run_id=run3.id,
+            agent_response='ok',
+            execution_time_ms=300,
+            metadata={},
+        )
+
+        self.client.force_login(self.administrador)
+        response = self.client.get('/api/metrics/')
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+
+        for key in (
+            'total_executions',
+            'executions_by_agent',
+            'executions_by_state',
+            'avg_execution_time_ms',
+            'error_rate',
+        ):
+            self.assertIn(key, data)
+
+        self.assertEqual(data['total_executions'], 3)
+        self.assertEqual(data['executions_by_agent']['rag-mails'], 2)
+        self.assertEqual(data['executions_by_agent']['trigger-comunicaciones'], 1)
+        self.assertEqual(data['executions_by_state']['completed'], 2)
+        self.assertEqual(data['executions_by_state']['failed'], 1)
+        self.assertEqual(data['error_rate']['rag-mails'], 0.5)
+        self.assertEqual(data['error_rate']['trigger-comunicaciones'], 0.0)
+
+
+# ─── Integration tests: acciones-trazabilidad-metricas / GET /api/admin/actions/ ───
+
+
+class ApiAdminActionsIntegrationTest(TestCase):
+    """
+    Integration tests para GET /api/admin/actions/ — tarea 12.3 (acciones-trazabilidad-metricas).
+    Validates: Requirements 10.2, 10.4, 10.5
+    """
+
+    def setUp(self):
+        self.user1 = CoreUser.objects.create_user(
+            username='admin_actions_user1@example.com',
+            email='admin_actions_user1@example.com',
+            password='testpass123',
+            first_name='Admin',
+            last_name='UserOne',
+            perfil=CoreUser.Profile.USUARIO,
+        )
+        self.user2 = CoreUser.objects.create_user(
+            username='admin_actions_user2@example.com',
+            email='admin_actions_user2@example.com',
+            password='testpass123',
+            first_name='Admin',
+            last_name='UserTwo',
+            perfil=CoreUser.Profile.USUARIO,
+        )
+        self.administrador = CoreUser.objects.create_user(
+            username='admin_actions_admin@example.com',
+            email='admin_actions_admin@example.com',
+            password='testpass123',
+            first_name='Admin',
+            last_name='Admin',
+            perfil=CoreUser.Profile.ADMINISTRADOR,
+        )
+        self.usuario_ic = CoreUser.objects.create_user(
+            username='admin_actions_ic@example.com',
+            email='admin_actions_ic@example.com',
+            password='testpass123',
+            first_name='Admin',
+            last_name='IC',
+            perfil=CoreUser.Profile.USUARIO_IC,
+        )
+
+    def test_api_admin_actions_requires_administrador(self):
+        """Perfil Usuario IC recibe HTTP 403 al pedir /api/admin/actions/ (Req 10.2)"""
+        self.client.force_login(self.usuario_ic)
+        response = self.client.get('/api/admin/actions/')
+
+        self.assertEqual(response.status_code, 403)
+        data = response.json()
+        self.assertIn('error', data)
+
+    def test_api_admin_actions_returns_all_users_runs(self):
+        """
+        /api/admin/actions/ sin user_id retorna runs de todos los usuarios (Req 10.4)
+        """
+        run1 = TraceabilityManager.create_run(
+            user=self.user1,
+            conversation_id='conv-admin-u1-abc123',
+            user_message='Consulta de user1',
+            agent_type='auto',
+        )
+        run2 = TraceabilityManager.create_run(
+            user=self.user2,
+            conversation_id='conv-admin-u2-abc123',
+            user_message='Consulta de user2',
+            agent_type='auto',
+        )
+
+        self.client.force_login(self.administrador)
+        response = self.client.get('/api/admin/actions/')
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['count'], 2)
+        ids = [r['id'] for r in data['results']]
+        self.assertIn(run1.id, ids)
+        self.assertIn(run2.id, ids)
+
+    def test_api_admin_actions_filters_by_user_id(self):
+        """/api/admin/actions/?user_id=<id> retorna solo los runs de ese usuario (Req 10.5)"""
+        run1 = TraceabilityManager.create_run(
+            user=self.user1,
+            conversation_id='conv-admin-filter-u1',
+            user_message='Consulta de user1',
+            agent_type='auto',
+        )
+        TraceabilityManager.create_run(
+            user=self.user2,
+            conversation_id='conv-admin-filter-u2',
+            user_message='Consulta de user2',
+            agent_type='auto',
+        )
+
+        self.client.force_login(self.administrador)
+        response = self.client.get(f'/api/admin/actions/?user_id={self.user1.id}')
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['count'], 1)
+        self.assertEqual(data['results'][0]['id'], run1.id)
+        self.assertEqual(data['results'][0]['user_id'], self.user1.id)
+
+
+# ─── Integration tests: acciones-trazabilidad-metricas / chat_view traceability ───
+
+
+class ChatViewTraceabilityIntegrationTest(TestCase):
+    """
+    Integration tests para la integración de trazabilidad en /api/chat/ — tarea 13.1
+    (acciones-trazabilidad-metricas).
+    Validates: Requirements 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6
+    """
+
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(
+            username='trace_chat@example.com',
+            email='trace_chat@example.com',
+            password='testpass123',
+            first_name='Trace',
+            last_name='Chat',
+            perfil='Administrador',
+        )
+
+    def _valid_n8n_response(self, agent_used='rag-mails', records_found=3):
+        return {
+            'conversationId': 'conv-trace00-abc123',
+            'output': '<p>Respuesta de prueba</p>',
+            'html_render': True,
+            'metadata': {
+                'agent_used': agent_used,
+                'execution_time_ms': 100,
+                'records_found': records_found,
+            },
+        }
+
+    def _post_chat(self, query='Hola', agent_type=None):
+        body = {'query': query}
+        if agent_type:
+            body['agentType'] = agent_type
+        return self.client.post(
+            '/api/chat/',
+            data=json.dumps(body),
+            content_type='application/json',
+        )
+
+    @patch('core.views.N8nClient')
+    def test_chat_view_creates_workflow_run(self, mock_n8n_class):
+        """POST válido crea un WorkflowRun con user/conversation_id/user_message correctos y
+        transición inicial 'created' en state_history (Req 7.1, 1.2, 1.3, 1.4)"""
+        mock_client = MagicMock()
+        mock_client.send.return_value = self._valid_n8n_response()
+        mock_n8n_class.return_value = mock_client
+        self.client.force_login(self.user)
+
+        response = self._post_chat('¿Qué comunicaciones hay sobre beneficios?')
+
+        self.assertEqual(response.status_code, 200)
+        run = WorkflowRun.objects.get(user=self.user)
+        self.assertEqual(run.user_message, '¿Qué comunicaciones hay sobre beneficios?')
+        self.assertTrue(run.conversation_id)
+        self.assertEqual(run.state_history[0]['state'], WorkflowRun.ExecutionState.CREATED)
+
+    @patch('core.views.N8nClient')
+    def test_chat_view_updates_run_on_success(self, mock_n8n_class):
+        """Respuesta exitosa de n8n actualiza WorkflowRun a 'completed' con agent_response (Req 2.4, 7.3)"""
+        mock_client = MagicMock()
+        mock_client.send.return_value = self._valid_n8n_response()
+        mock_n8n_class.return_value = mock_client
+        self.client.force_login(self.user)
+
+        self._post_chat('Consulta exitosa')
+
+        run = WorkflowRun.objects.get(user=self.user)
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.COMPLETED)
+        self.assertIn('Respuesta de prueba', run.agent_response)
+
+    @patch('core.views.N8nClient')
+    def test_chat_view_updates_run_on_failure(self, mock_n8n_class):
+        """Error de n8n (timeout) actualiza WorkflowRun a 'failed' con error_message (Req 2.5, 7.4)"""
+        mock_client = MagicMock()
+        mock_client.send.side_effect = N8nTimeoutError('Request timed out')
+        mock_n8n_class.return_value = mock_client
+        self.client.force_login(self.user)
+
+        response = self._post_chat('Consulta con timeout')
+
+        self.assertEqual(response.status_code, 504)
+        run = WorkflowRun.objects.get(user=self.user)
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.FAILED)
+        self.assertIn('n8n timeout', run.error_message)
+
+    @patch('core.views.N8nClient')
+    def test_chat_view_records_execution_time(self, mock_n8n_class):
+        """WorkflowRun.execution_time_ms se registra y es mayor a 0 (Req 1.10)"""
+        mock_client = MagicMock()
+        mock_client.send.return_value = self._valid_n8n_response()
+        mock_n8n_class.return_value = mock_client
+        self.client.force_login(self.user)
+
+        self._post_chat('Consulta para medir tiempo')
+
+        run = WorkflowRun.objects.get(user=self.user)
+        self.assertIsNotNone(run.execution_time_ms)
+        self.assertGreaterEqual(run.execution_time_ms, 0)
+
+    @patch('core.views.N8nClient')
+    def test_chat_view_includes_metadata_in_response(self, mock_n8n_class):
+        """Response JSON incluye metadata con agent_used, execution_time_ms, records_found (Req 9.1-9.6)"""
+        mock_client = MagicMock()
+        mock_client.send.return_value = self._valid_n8n_response(agent_used='rag-mails', records_found=5)
+        mock_n8n_class.return_value = mock_client
+        self.client.force_login(self.user)
+
+        response = self._post_chat('Consulta con metadata')
+
+        data = response.json()
+        self.assertIn('metadata', data)
+        self.assertEqual(data['metadata']['agent_used'], 'rag-mails')
+        self.assertEqual(data['metadata']['records_found'], 5)
+        self.assertIsInstance(data['metadata']['execution_time_ms'], int)
+
+    @patch('core.views.N8nClient')
+    def test_chat_view_updates_selected_agent_from_n8n_response(self, mock_n8n_class):
+        """selected_agent se actualiza con el agent_used real devuelto por n8n, no con el
+        agentType crudo pedido ('auto' por default) — Req 1.6, 4.3, 5.3, 6.3, 10.6"""
+        mock_client = MagicMock()
+        mock_client.send.return_value = self._valid_n8n_response(agent_used='rag-mails')
+        mock_n8n_class.return_value = mock_client
+        self.client.force_login(self.user)
+
+        self._post_chat('Consulta sin agentType explícito')
+
+        run = WorkflowRun.objects.get(user=self.user)
+        self.assertEqual(run.selected_agent, 'rag-mails')
+
+    @patch('core.services.WorkflowRun.objects.select_for_update')
+    @patch('core.views.N8nClient')
+    def test_traceability_does_not_block_user_response(self, mock_n8n_class, mock_select_for_update):
+        """Fallo interno de BD durante complete_run() no bloquea la respuesta exitosa al usuario
+        (Req 7.6, Conflict 2 de requirements.md: transacción separada síncrona)"""
+        mock_select_for_update.side_effect = Exception('Simulated DB failure during traceability update')
+        mock_client = MagicMock()
+        mock_client.send.return_value = self._valid_n8n_response()
+        mock_n8n_class.return_value = mock_client
+        self.client.force_login(self.user)
+
+        response = self._post_chat('Consulta con fallo de trazabilidad')
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn('output', data)
+        # La escritura de trazabilidad falló silenciosamente: el run se creó pero no se completó
+        run = WorkflowRun.objects.get(user=self.user)
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.CREATED)
+
+
+# ─── Model tests: acciones-trazabilidad-metricas / WorkflowRun, MetricEvent ──
+
+
+class WorkflowRunModelTest(TestCase):
+    """
+    Model tests para WorkflowRun — tarea 14.1 (acciones-trazabilidad-metricas).
+    Validates: Requirements 1.1, 2.9
+    """
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='model_test@example.com',
+            email='model_test@example.com',
+            password='testpass123',
+            first_name='Model',
+            last_name='Tester',
+            perfil='Administrador',
+        )
+
+    def test_workflow_run_indexes_exist(self):
+        """WorkflowRun._meta.indexes declara los 4 índices requeridos (Req 1.1)"""
+        index_field_sets = [tuple(idx.fields) for idx in WorkflowRun._meta.indexes]
+        self.assertIn(('user', '-created_at'), index_field_sets)
+        self.assertIn(('final_state',), index_field_sets)
+        self.assertIn(('selected_agent',), index_field_sets)
+        self.assertIn(('created_at',), index_field_sets)
+
+    def test_add_state_transition_updates_history(self):
+        """add_state_transition() agrega entrada a state_history y actualiza final_state (Req 2.9)"""
+        run = WorkflowRun.objects.create(
+            user=self.user,
+            conversation_id='conv-model-abc123',
+            user_message='Consulta de prueba',
+            selected_agent='rag-mails',
+        )
+        initial_len = len(run.state_history)
+
+        run.add_state_transition(WorkflowRun.ExecutionState.RUNNING)
+        run.save()
+        run.refresh_from_db()
+
+        self.assertEqual(len(run.state_history), initial_len + 1)
+        self.assertEqual(run.state_history[-1]['state'], WorkflowRun.ExecutionState.RUNNING)
+        self.assertIn('timestamp', run.state_history[-1])
+        self.assertEqual(run.final_state, WorkflowRun.ExecutionState.RUNNING)
+
+
+class MetricEventModelTest(TestCase):
+    """
+    Model tests para MetricEvent — tarea 14.1 (acciones-trazabilidad-metricas).
+    Validates: Requirement 8.1
+    """
+
+    def test_metric_event_defaults(self):
+        """MetricEvent sin value/metadata usa los defaults declarados (Req 8.1)"""
+        event = MetricEvent.objects.create(
+            event_type=MetricEvent.EventType.AGENT_EXECUTION,
+        )
+        self.assertIsNone(event.value)
+        self.assertEqual(event.metadata, {})
+
+
+# ─── Template tests: acciones-trazabilidad-metricas / actions.html ───────────
+
+
+class ActionsPageTemplateTest(TestCase):
+    """
+    Template tests para GET /actions/ — tarea 14.2 (acciones-trazabilidad-metricas).
+    Validates: Requirements 6.2, 6.3, 6.4, 6.6, 6.7
+    """
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='actions_page_user@example.com',
+            email='actions_page_user@example.com',
+            password='testpass123',
+            first_name='Actions',
+            last_name='Page',
+            perfil='Usuario',
+        )
+
+    def test_actions_page_requires_login(self):
+        """GET /actions/ sin autenticar redirige a /login/ (Req 6.7)"""
+        response = self.client.get('/actions/')
+        self.assertRedirects(response, '/login/?next=/actions/', fetch_redirect_response=False)
+
+    def test_actions_page_renders_user_runs(self):
+        """GET /actions/ renderiza una action-card por cada WorkflowRun del usuario (Req 6.2)"""
+        for i in range(3):
+            WorkflowRun.objects.create(
+                user=self.user,
+                conversation_id=f'conv-render-{i}',
+                user_message=f'Consulta {i}',
+                selected_agent='rag-mails',
+            )
+        self.client.force_login(self.user)
+
+        response = self.client.get('/actions/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'action-card', count=3)
+
+    def test_actions_page_color_codes_states(self):
+        """GET /actions/ aplica la clase CSS state-<final_state> por acción (Req 6.3, 6.4)"""
+        WorkflowRun.objects.create(
+            user=self.user, conversation_id='conv-color-completed',
+            user_message='msg', selected_agent='rag-mails',
+            final_state=WorkflowRun.ExecutionState.COMPLETED,
+        )
+        WorkflowRun.objects.create(
+            user=self.user, conversation_id='conv-color-failed',
+            user_message='msg', selected_agent='rag-mails',
+            final_state=WorkflowRun.ExecutionState.FAILED,
+        )
+        WorkflowRun.objects.create(
+            user=self.user, conversation_id='conv-color-running',
+            user_message='msg', selected_agent='rag-mails',
+            final_state=WorkflowRun.ExecutionState.RUNNING,
+        )
+        self.client.force_login(self.user)
+
+        response = self.client.get('/actions/')
+        content = response.content.decode()
+
+        self.assertIn('state-completed', content)
+        self.assertIn('state-failed', content)
+        self.assertIn('state-running', content)
+
+    def test_actions_page_paginates(self):
+        """GET /actions/?page=1 muestra 20 acciones y controles de paginación (Req 6.6)"""
+        for i in range(25):
+            WorkflowRun.objects.create(
+                user=self.user,
+                conversation_id=f'conv-page-{i}',
+                user_message=f'Consulta {i}',
+                selected_agent='rag-mails',
+            )
+        self.client.force_login(self.user)
+
+        response = self.client.get('/actions/?page=1')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'action-card', count=20)
+        self.assertContains(response, 'class="pagination"')
+        self.assertContains(response, 'Siguiente')

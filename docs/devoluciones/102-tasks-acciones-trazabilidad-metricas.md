@@ -227,7 +227,31 @@ El tasks.md está completo y listo para implementación.
 
 ---
 
+## 9. Corrección global de estructura de tests (2026-07-01)
+
+**Motivo:** Las tareas 11.2, 12.1, 12.2, 12.3, 13.1, 14.1 y 14.2 en el tasks.md original referenciaban rutas del tipo `core/tests/test_*.py` (paquete `tests/`). Esto es incorrecto para este proyecto.
+
+**Decisión preexistente (devolución 70):** `docs/devoluciones/70-validacion-home-chat-orchestrator-contract-tarea-2.3.md` documenta que Python no permite que coexistan `core/tests.py` y `core/tests/` en la misma carpeta (conflicto de import). El proyecto adoptó el módulo único `app/core/tests.py` desde entonces. Aproximadamente 15 devoluciones posteriores referencian tests con la ruta `core.tests.NombreDeClase`, consolidando esa decisión.
+
+**Corrección aplicada:** Se actualizaron todas las líneas de encabezado de subtareas de testing para reemplazar las rutas `core/tests/test_*.py` por `core/tests.py (módulo único)` con referencia a la devolución 70:
+
+| Tarea | Antes                                     | Después                                |
+| ----- | ----------------------------------------- | -------------------------------------- |
+| 11.2  | `in core/tests/test_traceability.py`      | `in core/tests.py (módulo único; ...)` |
+| 12.1  | `in core/tests/test_api_endpoints.py`     | `in core/tests.py (módulo único; ...)` |
+| 12.2  | `in core/tests/test_api_endpoints.py`     | `in core/tests.py (módulo único; ...)` |
+| 12.3  | `in core/tests/test_api_endpoints.py`     | `in core/tests.py (módulo único; ...)` |
+| 13.1  | `in core/tests/test_chat_traceability.py` | `in core/tests.py (módulo único; ...)` |
+| 14.1  | `in core/tests/test_models.py`            | `in core/tests.py (módulo único; ...)` |
+| 14.2  | `in core/tests/test_templates.py`         | `in core/tests.py (módulo único; ...)` |
+
+La tarea 11.1 ya había sido corregida durante la validación de esa tarea (devolución 121).
+
+**Impacto:** Ningún cambio de alcance ni de criterios de aceptación. Solo se corrigió la ruta del archivo destino. Los nombres de clases y tests dentro de cada tarea permanecen idénticos. Claude Code debe agregar nuevas clases `TestCase` al final de `app/core/tests.py` existente, sin crear ningún archivo ni paquete nuevo bajo `core/tests/`.
+
+---
+
 **Estado:** tasks.md completado — listo para implementación
 
-**Fecha:** 2026-06-27
+**Fecha original:** 2026-06-27 | **Última actualización:** 2026-07-01 (corrección global de rutas de tests)
 **Veredicto:** ✅ COMPLETADO

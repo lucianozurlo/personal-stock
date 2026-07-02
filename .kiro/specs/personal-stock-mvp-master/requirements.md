@@ -9,7 +9,7 @@ dependencias entre ellos, el orden de implementación, y el estado actual de cad
 **NO se implementa directamente**: sirve como mapa de ruta y registro de progreso.
 
 **Fecha de creación**: 2026-06-21
-**Última actualización**: 2026-06-21
+**Última actualización**: 2026-07-01 (spec 4 acciones-trazabilidad-metricas → completed)
 
 ---
 
@@ -29,7 +29,7 @@ dependencias entre ellos, el orden de implementación, y el estado actual de cad
 | 1   | base-django-login-home            | Standard Feature (Requirements-first) | completed   |
 | 2   | usuarios-demo-perfiles-permisos   | Standard Feature (Requirements-first) | completed   |
 | 3   | home-chat-orchestrator-contract   | Standard Feature (Requirements-first) | completed   |
-| 4   | acciones-trazabilidad-metricas    | Standard Feature (Requirements-first) | sin empezar |
+| 4   | acciones-trazabilidad-metricas    | Standard Feature (Requirements-first) | completed   |
 | 5   | rag-mails-dataset-permissions     | Standard Feature (Requirements-first) | sin empezar |
 | 6   | trigger-comunicaciones-email      | Standard Feature (Requirements-first) | sin empezar |
 | 7   | contenido-heredado-y-navegacion   | Quick Plan                            | sin empezar |

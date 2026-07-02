@@ -67,6 +67,8 @@ Este spec depende de `home-chat-orchestrator-contract` (no hay qué trazar sin e
 
 3. WHEN the agent starts processing, THE Traceability_System SHALL update Execution_State to "running"
 
+   > **MVP 1 limitation (see Decision 7 below):** This "running" transition is NOT exercised in MVP 1. Django registers the run in "created", calls n8n, and on response transitions directly to "completed"/"failed". The intermediate "running" state is prepared in the model for a future architecture where Django (not n8n) drives intention classification.
+
 4. WHEN the agent completes successfully, THE Traceability_System SHALL update Execution_State to "completed"
 
 5. WHEN the agent encounters an error, THE Traceability_System SHALL update Execution_State to "failed"
@@ -167,7 +169,9 @@ Este spec depende de `home-chat-orchestrator-contract` (no hay qué trazar sin e
 
 1. THE Orchestrator_Endpoint `/api/chat/` SHALL call Traceability_System to create a WorkflowRun record at the start of each request
 
-2. THE Orchestrator_Endpoint SHALL update the WorkflowRun record with agent selection, permissions applied, and system decisions before calling the agent
+2. WHEN the agent (n8n) returns a response, THE Orchestrator_Endpoint SHALL update the WorkflowRun record with the actual `selected_agent` (from `metadata.agent_used`), the final state, and the response, transitioning the run from "created" to "completed" or "failed"
+
+   > **MVP 1 limitation (see Decision 7 below):** Django does NOT populate `detected_intention`, `selection_reason` or `permissions_applied`, nor does it transition through the "running" state, because intention classification and agent selection are performed by n8n (decided in the closed spec `home-chat-orchestrator-contract`), not by Django. Django does not hold that data "before calling the agent". The `WorkflowRun` fields and the `TraceabilityManager.update_run_agent_selection()` method exist and are unit-tested, but remain **prepared and not populated** in MVP 1. They would only be populated if a future n8n contract exposes `detected_intention` / `selection_reason`.
 
 3. THE Orchestrator_Endpoint SHALL update the WorkflowRun record with the agent response and final state after the agent returns
 
@@ -295,6 +299,25 @@ Este spec depende de `home-chat-orchestrator-contract` (no hay qué trazar sin e
 **Resolución:** En MVP 1, la página de acciones es un template Django simple con tabla/cards y paginación básica. NO es SPA, NO tiene filtros complejos (solo paginación). Si en MVP posterior se requiere búsqueda/filtrado avanzado, se puede evolucionar a SPA. Requirement 6 define solo funcionalidad básica.
 
 **Documentación:** Queda documentado en Requirement 6 (template simple, paginación básica, detalle expandible).
+
+---
+
+### Conflict 7: Clasificación de intención y estado "running" — Django vs n8n
+
+**Conflicto detectado:** Los Requirements 7 AC2, 2.3 y (por extensión) 2.7 asumen que Django clasifica la intención, selecciona el agente y transiciona a estado `running` **antes de llamar al agente**. En la arquitectura real, decidida en el spec ya cerrado `home-chat-orchestrator-contract`, esa clasificación la hace **n8n externamente**. El contrato de respuesta (Response_Payload) solo expone `metadata: {agent_used, execution_time_ms, records_found}`, sin `detected_intention` ni `selection_reason`. Django no tiene esos datos antes de llamar a n8n.
+
+**Efecto observado en el código (verificado en tarea 13.1, devolución 127):**
+
+- `TraceabilityManager.update_run_agent_selection()` existe y tiene unit test, pero **nunca se invoca desde `chat_view`**.
+- `final_state` no transiciona por `running` (va de `created` directo a `completed`/`failed`).
+- `detected_intention`, `selection_reason` y `permissions_applied` quedan vacíos.
+- `selected_agent` **sí** se puebla, a posteriori, desde `metadata.agent_used`.
+
+**Resolución (aprobada, MVP 1):** Documentar que en MVP 1 el estado `running` y los campos `detected_intention` / `selection_reason` / `permissions_applied` quedan **preparados en el modelo pero NO poblados**. El modelo `WorkflowRun` y el método `update_run_agent_selection()` existen para MVP posterior. Poblarlos requeriría extender el contrato de n8n para que exponga `detected_intention` / `selection_reason`, lo cual queda **fuera del alcance de MVP 1**. `selected_agent` sí se puebla desde `metadata.agent_used`. Esta decisión NO reabre `home-chat-orchestrator-contract`.
+
+**Coherencia:** Alineado con `product.md` ("Si una parte no puede completarse en MVP 1, queda marcada como preparada para MVP posterior — nunca se omite en silencio") y con `rules.md` (no reabrir specs cerrados).
+
+**Documentación:** Queda documentado en Requirement 7 AC2, Requirement 2.3 (notas de limitación MVP 1) y en la sección Testing Strategy / Data Models de `design.md`.
 
 ## Notes
 
